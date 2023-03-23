@@ -1,5 +1,6 @@
 package buscaminas;
 
+import java.util.Random;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -65,57 +66,68 @@ public class main extends Application{
         labelcanttiempo.setMaxSize(50, 30);
         
         // Implementacion de Timer 
-        
-        Timer timer = new Timer(); 
+        Timer timer = new Timer();
         TimerTask task = new TimerTask() {
-            int countersec = 0;
-            int countermin = 0;
             @Override
             public void run() {
-                if (countersec == 59) {
-                    countermin++;
-                    countersec = -1;
+                if (Cuadricula.countersec == 59) {
+                    Cuadricula.countermin++;
+                    Cuadricula.countersec = -1;
                 }
                 if (Cuadricula.gameover == false) {
-                    if (countermin==0) {
-                        if (countersec < 9) {
-                            Platform.runLater(() -> labelcanttiempo.setText("00:0" + Integer.toString(countersec)));
-                            countersec++;
+                    if (Cuadricula.countermin==0) {
+                        if (Cuadricula.countersec < 9) {
+                            Platform.runLater(() -> labelcanttiempo.setText("00:0" + Integer.toString(Cuadricula.countersec)));
+                            Cuadricula.countersec++;
                         }
                         else {
-                            Platform.runLater(() -> labelcanttiempo.setText("00:" + Integer.toString(countersec)));
-                            countersec++;
+                            Platform.runLater(() -> labelcanttiempo.setText("00:" + Integer.toString(Cuadricula.countersec)));
+                            Cuadricula.countersec++;
                         }
                     }
-                    else if (countermin < 9) {
-                        if (countersec < 9) {
-                            Platform.runLater(() -> labelcanttiempo.setText("0" + Integer.toString(countermin) + ":0" + Integer.toString(countersec)));
-                            countersec++;
+                    else if (Cuadricula.countermin < 9) {
+                        if (Cuadricula.countersec < 9) {
+                            Platform.runLater(() -> labelcanttiempo.setText("0" + Integer.toString(Cuadricula.countermin) + ":0" + Integer.toString(Cuadricula.countersec)));
+                            Cuadricula.countersec++;
                         }
                         else {
-                            Platform.runLater(() -> labelcanttiempo.setText("0" + Integer.toString(countermin) + ":" + Integer.toString(countersec)));
-                            countersec++;
+                            Platform.runLater(() -> labelcanttiempo.setText("0" + Integer.toString(Cuadricula.countermin) + ":" + Integer.toString(Cuadricula.countersec)));
+                            Cuadricula.countersec++;
                         }
                     }
                     else {
-                        if (countersec < 9) {
-                            Platform.runLater(() -> labelcanttiempo.setText(Integer.toString(countermin) + ":0" + Integer.toString(countersec)));
-                            countersec++;
+                        if (Cuadricula.countersec < 9) {
+                            Platform.runLater(() -> labelcanttiempo.setText(Integer.toString(Cuadricula.countermin) + ":0" + Integer.toString(Cuadricula.countersec)));
+                            Cuadricula.countersec++;
                         }
                         else {
-                            Platform.runLater(() -> labelcanttiempo.setText(Integer.toString(countermin) + ":" + Integer.toString(countersec)));
-                            countersec++;
+                            Platform.runLater(() -> labelcanttiempo.setText(Integer.toString(Cuadricula.countermin) + ":" + Integer.toString(Cuadricula.countersec)));
+                            Cuadricula.countersec++;
                         }
                     }
-                }
-                else {
-                    timer.cancel();
                 }
             }
         };
         timer.scheduleAtFixedRate(task, 0, 1000l); 
+        
+        // Boton para hacer restart
+        Button botonreset = new Button();
+        botonreset.setText(":|");
+        botonreset.setStyle("-fx-font-size: 20;");
+        botonreset.setTranslateX(0);
+        botonreset.setTranslateY(-215);
+        botonreset.setMaxSize(50, 50);
+        
+        botonreset.setOnAction(e -> {
+            
+            botonreset.setText(":|");
+            labelcantminasencontradas.setText("0");
+            restart();
+        
+        });
             
         // Matriz de botones
+        
         int posx = -175;
         int posy = -150;
         
@@ -139,6 +151,8 @@ public class main extends Application{
                                 if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
                                     Cuadricula.revelarMinas();
                                     Cuadricula.gameover = true;
+                                    botonreset.setText(":(");
+                                    
                                 }
                                 else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
                                     Cuadricula.revelarCeros(fila, col);
@@ -185,6 +199,7 @@ public class main extends Application{
                                 if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
                                     Cuadricula.revelarMinas();
                                     Cuadricula.gameover = true;
+                                    botonreset.setText(":(");
                                 }
                                 else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
                                     Cuadricula.revelarCeros(fila, col);
@@ -225,12 +240,30 @@ public class main extends Application{
         Cuadricula.generarNumAdy();
         
         //Se añaden los objetos al layout
-        layout.getChildren().addAll(labelminasencontradas, labelcantminasencontradas, labeltiempo, labelcanttiempo);
+        layout.getChildren().addAll(labelminasencontradas, labelcantminasencontradas, labeltiempo, labelcanttiempo, botonreset);
         
         
     }
     
-    void restart() {
+    public void restart() {
+        Cuadricula.cantbanderas = 0;
+        Cuadricula.countersec = -1;
+        Cuadricula.countermin = 0;
+        Cuadricula.gameover = false;
+        Random r = new Random();
+        int numrandom = r.nextInt(8);
+        for (int i=0; i<=7; i++) {
+            for (int j=0; j<=7; j++) {
+                Cuadricula.matrizvalores[i][j].mina = 0;
+                Cuadricula.matrizvalores[i][j].bandera = 0;
+                Cuadricula.matrizvalores[i][j].numrev = 0;
+                Cuadricula.matrizvalores[i][j].revelado = false;
+                Cuadricula.matrizboton[i][j].setText("");
+                Cuadricula.colorAleatorio(i, j, numrandom);
+            }
+        }
+        Cuadricula.generarMinas();
+        Cuadricula.generarNumAdy();
         
     }
     

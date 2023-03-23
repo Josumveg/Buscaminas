@@ -11,6 +11,8 @@ public class Cuadricula {
     int numrev;
     boolean revelado;
     static int cantbanderas = 0;
+    static int countersec = 0;
+    static int countermin = 0;
     static boolean gameover = false;
     static Button [][] matrizboton = new Button[8][8];
     static Cuadricula [][] matrizvalores = new Cuadricula [8][8];
@@ -321,6 +323,33 @@ public class Cuadricula {
             else { // si es algo diferente a cero para el ciclo
                 break;
             }
+        }
+    }
+    
+    static void colorAleatorio(int i, int j, int numrandom) {
+        if (numrandom == 0) {
+            matrizboton[i][j].setStyle("-fx-background-color: #0093ff;-fx-border-color: #272323;");
+        }
+        else if (numrandom == 1) {
+            matrizboton[i][j].setStyle("-fx-background-color: #f4f162;-fx-border-color: #272323;");
+        }
+        else if (numrandom == 2) {
+            matrizboton[i][j].setStyle("-fx-background-color: #EF83DA;-fx-border-color: #272323;");
+        }
+        else if (numrandom == 3) {
+            matrizboton[i][j].setStyle("-fx-background-color: #8DEAD0;-fx-border-color: #272323;");
+        }
+        else if (numrandom == 4) {
+            matrizboton[i][j].setStyle("-fx-background-color: #51B0F7;-fx-border-color: #272323;");
+        }
+        else if (numrandom == 5) {
+            matrizboton[i][j].setStyle("-fx-background-color: #B676F3;-fx-border-color: #272323;");
+        }
+        else if (numrandom == 6) {
+            matrizboton[i][j].setStyle("-fx-background-color: #F3B86D;-fx-border-color: #272323;");
+        }
+        else if (numrandom == 7) {
+            matrizboton[i][j].setStyle("-fx-background-color: #ECAB5D;-fx-border-color: #272323;");
         }
     }
 }
