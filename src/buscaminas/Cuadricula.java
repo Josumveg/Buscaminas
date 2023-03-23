@@ -57,8 +57,8 @@ public class Cuadricula {
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) { // indice para recorrer cuadricula
                 if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
-                    matrizboton[i][j].setText("*"); // revela la mina
-                    matrizboton[i][j].setStyle("-fx-background-color: #F00000;");
+                    matrizboton[i][j].setText("*"); // cambia el texto del boton para simbolizar una mina
+                    matrizboton[i][j].setStyle("-fx-background-color: #F00000;"); // cambia el color a rojo 
                 }
             }
         }
@@ -66,57 +66,57 @@ public class Cuadricula {
     }
     
     static boolean esPosValida(int i, int j) {
-        if (i < 0 || j < 0 || i > 7 || j > 7){ 
-            return false;
+        if (i < 0 || j < 0 || i > 7 || j > 7){ // se fija que los indices no se salgan del array
+            return false; // si se salen retorna false
         }
         else {
-            return true;
+            return true; // en caso contrario retorna true
         }
     }
     
-    static void generarNumAdy() {
-        for (int i=0; i<=7; i++) {
-            for (int j=0; j<=7; j++) { 
-                int contador = 0;
-                if (!Cuadricula.esMina(matrizvalores[i][j].mina)) {
-                    if (esPosValida(i-1, j-1)) {
-                        if (Cuadricula.esMina(matrizvalores[i-1][j-1].mina)) {
-                            contador++;
+    static void generarNumAdy() { // genera los numeros de minas adyacentes y los añade a matrizvalores.numrev
+        for (int i=0; i<=7; i++) { 
+            for (int j=0; j<=7; j++) { // indices para recorrer la matriz
+                int contador = 0; 
+                if (!Cuadricula.esMina(matrizvalores[i][j].mina)) { // si no hay una mina en el espacio
+                    if (esPosValida(i-1, j-1)) { // si el espacio de arriba a la izquierda no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i-1][j-1].mina)) { // si el espacio de arriba a la izquierda es una mina
+                            contador++; // se aumenta el contador
                         }
                     }
-                    if (esPosValida(i-1, j)) {
-                        if (Cuadricula.esMina(matrizvalores[i-1][j].mina)) {
-                            contador++;
+                    if (esPosValida(i-1, j)) { // si el espacio de arriba no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i-1][j].mina)) { // si el espacio de arriba es una mina
+                            contador++; // se aumenta el contador
                         }
                     }
-                    if (esPosValida(i-1, j+1)) {
-                        if (Cuadricula.esMina(matrizvalores[i-1][j+1].mina)) {
-                            contador++;
+                    if (esPosValida(i-1, j+1)) { // si el espacio de arriba a la derecha no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i-1][j+1].mina)) { // si el espacio de arriba a la derecha es una mina
+                            contador++; // se aumenta el contador
                         }
                     }
-                    if (esPosValida(i, j-1)) {
-                        if (Cuadricula.esMina(matrizvalores[i][j-1].mina)) {
-                            contador++;
+                    if (esPosValida(i, j-1)) { // si el espacio de la izquierda no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i][j-1].mina)) { // si el espacio de la izquierda es una mina 
+                            contador++; // se aumenta el contador
                         }
                     }
-                    if (esPosValida(i, j+1)) {
-                        if (Cuadricula.esMina(matrizvalores[i][j+1].mina)) {
-                            contador++;
+                    if (esPosValida(i, j+1)) { // si el espacio de la derecha no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i][j+1].mina)) { // si el espacio de la derecha es una mina
+                            contador++; // se aumenta el contador
                         }
                     }
-                    if (esPosValida(i+1, j-1)) {
-                        if (Cuadricula.esMina(matrizvalores[i+1][j-1].mina)) {
-                            contador++;
+                    if (esPosValida(i+1, j-1)) { // si el espacio de abajo a la izquierda no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i+1][j-1].mina)) { // si el espacio de abajo a la izquierda es una mina
+                            contador++; // se aumenta el contador
                         }
                     }
-                    if (esPosValida(i+1, j)) {
-                        if (Cuadricula.esMina(matrizvalores[i+1][j].mina)) {
-                            contador++;
+                    if (esPosValida(i+1, j)) { // si el espacio de abajo no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i+1][j].mina)) { // si el espacio de abajo es una mina 
+                            contador++; // se aumenta el contador
                         }
                     }
-                    if (esPosValida(i+1, j+1)) {
-                        if (Cuadricula.esMina(matrizvalores[i+1][j+1].mina)) {
-                            contador++;
+                    if (esPosValida(i+1, j+1)) { // si el espacio de abajo a la derecha no se sale del arreglo
+                        if (Cuadricula.esMina(matrizvalores[i+1][j+1].mina)) { // si el espacio de abajo a la derecha es una mina
+                            contador++; // se aumenta el contador
                         }
                     }
                     matrizvalores[i][j].numrev = contador;
@@ -130,70 +130,71 @@ public class Cuadricula {
     }
     
     static void revelarAdy(int i, int j) {
-        if (esPosValida(i-1, j-1)) {
-            matrizboton[i-1][j-1].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i-1][j-1].revelado = true;
-            if (matrizvalores[i-1][j-1].numrev > 0) {
+        if (esPosValida(i-1, j-1)) { // se revisa que los indices no se salgan del array
+            matrizboton[i-1][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i-1][j-1].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i-1][j-1].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i-1][j-1].setText(Integer.toString(matrizvalores[i-1][j-1].numrev));
             }
         }
-        if (esPosValida(i-1, j)) {
-            matrizboton[i-1][j].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i-1][j].revelado = true;
-            if (matrizvalores[i-1][j].numrev > 0) {
+        if (esPosValida(i-1, j)) { // se revisa que los indices no se salgan del array
+            matrizboton[i-1][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i-1][j].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i-1][j].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i-1][j].setText(Integer.toString(matrizvalores[i-1][j].numrev));
             }
         }
-        if (esPosValida(i-1, j+1)) {
-            matrizboton[i-1][j+1].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i-1][j+1].revelado = true;
-            if (matrizvalores[i-1][j+1].numrev > 0) {
+        if (esPosValida(i-1, j+1)) { // se revisa que los indices no se salgan del array
+            matrizboton[i-1][j+1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i-1][j+1].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i-1][j+1].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i-1][j+1].setText(Integer.toString(matrizvalores[i-1][j+1].numrev));
             }
         }
-        if (esPosValida(i, j-1)) {
-            matrizboton[i][j-1].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i][j-1].revelado = true;
-            if (matrizvalores[i][j-1].numrev > 0) {
+        if (esPosValida(i, j-1)) { // se revisa que los indices no se salgan del array
+            matrizboton[i][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i][j-1].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i][j-1].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i][j-1].setText(Integer.toString(matrizvalores[i][j-1].numrev));
             }
         }
-        if (esPosValida(i, j+1)) {
-            matrizboton[i][j+1].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i][j+1].revelado = true;
-            if (matrizvalores[i][j+1].numrev > 0) {
+        if (esPosValida(i, j+1)) { // se revisa que los indices no se salgan del array
+            matrizboton[i][j+1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i][j+1].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i][j+1].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i][j+1].setText(Integer.toString(matrizvalores[i][j+1].numrev));
             }
         }
-        if (esPosValida(i+1, j-1)) {
-            matrizboton[i+1][j-1].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i+1][j-1].revelado = true;
-            if (matrizvalores[i+1][j-1].numrev > 0) {
+        if (esPosValida(i+1, j-1)) { // se revisa que los indices no se salgan del array
+            matrizboton[i+1][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i+1][j-1].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i+1][j-1].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i+1][j-1].setText(Integer.toString(matrizvalores[i+1][j-1].numrev));
             }
         }
-        if (esPosValida(i+1, j)) {
-            matrizboton[i+1][j].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i+1][j].revelado = true;
-            if (matrizvalores[i+1][j].numrev > 0) {
+        if (esPosValida(i+1, j)) { // se revisa que los indices no se salgan del array
+            matrizboton[i+1][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i+1][j].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i+1][j].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i+1][j].setText(Integer.toString(matrizvalores[i+1][j].numrev));
             }
         }
-        if (esPosValida(i+1, j+1)) {
-            matrizboton[i+1][j+1].setStyle("-fx-background-color: #DADAD7;");
-            matrizvalores[i+1][j+1].revelado = true;
-            if (matrizvalores[i+1][j+1].numrev > 0) {
+        if (esPosValida(i+1, j+1)) { // se revisa que los indices no se salgan del array
+            matrizboton[i+1][j+1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+            matrizvalores[i+1][j+1].revelado = true; // se refleja la revelacion en la matriz
+            if (matrizvalores[i+1][j+1].numrev > 0) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
                 matrizboton[i+1][j+1].setText(Integer.toString(matrizvalores[i+1][j+1].numrev));
             }
         }
-        matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;");
+        matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+        matrizvalores[i][j].revelado = true; // se refleja la revelacion en la matriz
             
     }
     
-    static void revelarCerosAdy(int i, int j) {
+    static void revelarCerosAdy(int i, int j) { // revela los espacios sin nada adyacentes al espacio que se selecciona
         Cuadricula.revelarAdy(i, j);
-        int posoriginali = i;
-        int posoriginalj = j;
+        int posoriginali = i; // se guarda la posicion original de i
+        int posoriginalj = j; // se guarda la posicion original de j
         while (j >= 0) { // revela hacia la izquierda
             while (i <= 7) { // revela hacia abajo
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
@@ -204,7 +205,7 @@ public class Cuadricula {
                     break;
                 }
             }
-            i = posoriginali;
+            i = posoriginali; // se devuelve a la posicion i original
             while (i >= 0) { // revela hacia arriba
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
                     Cuadricula.revelarAdy(i, j);
@@ -223,7 +224,7 @@ public class Cuadricula {
                 break;
             }
         }
-        j = posoriginalj;
+        j = posoriginalj; // se devuelve a la posicion j original
         while (j <= 7) { // revela hacia la derecha
             while (i <= 7) { // revela hacia abajo
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
@@ -234,7 +235,7 @@ public class Cuadricula {
                     break;
                 }
             }
-            i = posoriginali;
+            i = posoriginali; // se devuelve a la posicion i original
             while (i >= 0) { // revela hacia arriba
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
                     Cuadricula.revelarAdy(i, j);
@@ -244,7 +245,7 @@ public class Cuadricula {
                     break;
                 }
             }
-            i = posoriginali;
+            i = posoriginali; // se devuelve a la posicion i original
             if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
                 Cuadricula.revelarAdy(i, j);
                 j++;
@@ -255,10 +256,10 @@ public class Cuadricula {
         }
     }
     
-    static void revelarCeros(int i, int j) {
+    static void revelarCeros(int i, int j) { // repite el ciclo de revelar ceros adyacentes en toda la columna
         Cuadricula.revelarCerosAdy(i, j);
-        int posoriginali = i;
-        int posoriginalj = j;
+        int posoriginali = i; // se guarda la posicion original de i
+        int posoriginalj = j; // se guarda la posicion original de j
         while (j >= 0) { // revela hacia la izquierda
             while (i <= 7) { // revela hacia abajo
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
@@ -269,7 +270,7 @@ public class Cuadricula {
                     break;
                 }
             }
-            i = posoriginali;
+            i = posoriginali; 
             while (i >= 0) { // revela hacia arriba
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
                     Cuadricula.revelarCerosAdy(i, j);
@@ -279,7 +280,7 @@ public class Cuadricula {
                     break;
                 }
             }
-            i = posoriginali;
+            i = posoriginali; // se devuelve a la posicion i original
             if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
                 Cuadricula.revelarCerosAdy(i, j);
                 j--;
@@ -288,7 +289,7 @@ public class Cuadricula {
                 break;
             }
         }
-        j = posoriginalj;
+        j = posoriginalj; // se devuelve a la posicion j original
         while (j <= 7) { // revela hacia la derecha
             while (i <= 7) { // revela hacia abajo
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
@@ -299,7 +300,7 @@ public class Cuadricula {
                     break;
                 }
             }
-            i = posoriginali;
+            i = posoriginali; // se devuelve a la posicion i original
             while (i >= 0) { // revela hacia arriba
                 if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
                     Cuadricula.revelarCerosAdy(i, j);

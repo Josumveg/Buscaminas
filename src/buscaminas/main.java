@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+import javafx.scene.input.*;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -47,17 +48,30 @@ public class main extends Application{
                     posx = -175;
                     posy = posy+50;
                     Cuadricula.matrizboton[fila][col].setMaxSize(50,50);
-                    Cuadricula.matrizboton[fila][col].setOnAction(e -> {
+                    Cuadricula.matrizboton[fila][col].setStyle("-fx-border-color: #272323;");
+                    Cuadricula.matrizboton[fila][col].setOnMouseClicked(e -> {
                         
-                        if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
-                            Cuadricula.revelarMinas();
+                        if (e.getButton() == MouseButton.PRIMARY) {
+                            if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
+                                Cuadricula.revelarMinas();
+                            }
+                            else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
+                                Cuadricula.revelarCeros(fila, col);
+                            }
+                            else {
+                                Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
+                                 Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;");
+                            }
                         }
-                        else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
-                            Cuadricula.revelarCeros(fila, col);
-                        }
-                        else {
-                            Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
-                             Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;");
+                        else if (e.getButton() == MouseButton.SECONDARY) {
+                            if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
+                                Cuadricula.matrizboton[fila][col].setText("|>");
+                                Cuadricula.matrizvalores[fila][col].bandera = 1;
+                            }
+                            else {
+                                Cuadricula.matrizboton[fila][col].setText("");
+                                Cuadricula.matrizvalores[fila][col].bandera = 0;
+                            }
                         }
                     
                     });
@@ -70,17 +84,30 @@ public class main extends Application{
                     Cuadricula.matrizboton[fila][col].setTranslateY(posy);
                     posx = posx+50;
                     Cuadricula.matrizboton[fila][col].setMaxSize(50,50);
-                    Cuadricula.matrizboton[fila][col].setOnAction(e -> {
+                    Cuadricula.matrizboton[fila][col].setStyle("-fx-border-color: #272323;");
+                    Cuadricula.matrizboton[fila][col].setOnMouseClicked(e -> {
                         
-                        if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
-                            Cuadricula.revelarMinas();
+                        if (e.getButton() == MouseButton.PRIMARY) {
+                            if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
+                                Cuadricula.revelarMinas();
+                            }
+                            else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
+                                Cuadricula.revelarCeros(fila, col);
+                            }
+                            else {
+                                Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
+                                 Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;");
+                            }
                         }
-                        else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
-                            Cuadricula.revelarCeros(fila, col);
-                        }
-                        else {
-                            Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
-                             Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;");
+                        else if (e.getButton() == MouseButton.SECONDARY) {
+                            if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
+                                Cuadricula.matrizboton[fila][col].setText("|>");
+                                Cuadricula.matrizvalores[fila][col].bandera = 1;
+                            }
+                            else {
+                                Cuadricula.matrizboton[fila][col].setText("");
+                                Cuadricula.matrizvalores[fila][col].bandera = 0;
+                            }
                         }
                     
                     });
