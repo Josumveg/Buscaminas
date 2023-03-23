@@ -10,6 +10,8 @@ public class Cuadricula {
     int bandera;
     int numrev;
     boolean revelado;
+    static int cantbanderas = 0;
+    static boolean gameover = false;
     static Button [][] matrizboton = new Button[8][8];
     static Cuadricula [][] matrizvalores = new Cuadricula [8][8];
     
@@ -59,6 +61,7 @@ public class Cuadricula {
                 if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
                     matrizboton[i][j].setText("*"); // cambia el texto del boton para simbolizar una mina
                     matrizboton[i][j].setStyle("-fx-background-color: #F00000;"); // cambia el color a rojo 
+                    matrizvalores[i][j].revelado = true;
                 }
             }
         }
