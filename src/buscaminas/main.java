@@ -68,12 +68,45 @@ public class main extends Application{
         
         Timer timer = new Timer(); 
         TimerTask task = new TimerTask() {
-            int counter = 0;
+            int countersec = 0;
+            int countermin = 0;
             @Override
             public void run() {
+                if (countersec == 59) {
+                    countermin++;
+                    countersec = -1;
+                }
                 if (Cuadricula.gameover == false) {
-                    Platform.runLater(() -> labelcanttiempo.setText(Integer.toString(counter)));
-                    counter++;
+                    if (countermin==0) {
+                        if (countersec < 9) {
+                            Platform.runLater(() -> labelcanttiempo.setText("00:0" + Integer.toString(countersec)));
+                            countersec++;
+                        }
+                        else {
+                            Platform.runLater(() -> labelcanttiempo.setText("00:" + Integer.toString(countersec)));
+                            countersec++;
+                        }
+                    }
+                    else if (countermin < 9) {
+                        if (countersec < 9) {
+                            Platform.runLater(() -> labelcanttiempo.setText("0" + Integer.toString(countermin) + ":0" + Integer.toString(countersec)));
+                            countersec++;
+                        }
+                        else {
+                            Platform.runLater(() -> labelcanttiempo.setText("0" + Integer.toString(countermin) + ":" + Integer.toString(countersec)));
+                            countersec++;
+                        }
+                    }
+                    else {
+                        if (countersec < 9) {
+                            Platform.runLater(() -> labelcanttiempo.setText(Integer.toString(countermin) + ":0" + Integer.toString(countersec)));
+                            countersec++;
+                        }
+                        else {
+                            Platform.runLater(() -> labelcanttiempo.setText(Integer.toString(countermin) + ":" + Integer.toString(countersec)));
+                            countersec++;
+                        }
+                    }
                 }
                 else {
                     timer.cancel();
