@@ -9,13 +9,15 @@ public class Cuadricula {
     int mina;
     int bandera;
     int numrev;
+    boolean revelado;
     static Button [][] matrizboton = new Button[8][8];
     static Cuadricula [][] matrizvalores = new Cuadricula [8][8];
     
-    Cuadricula(int mina, int bandera, int numrev){
+    Cuadricula(int mina, int bandera, int numrev, boolean revelado){
         this.mina = mina;
         this.bandera = bandera;
         this.numrev = numrev;
+        this.revelado = revelado;
     }
     
     static void generarMinas() { //añade minas en orden random a matriz
@@ -245,28 +247,67 @@ public class Cuadricula {
     }
     
     static void revelarCeros(int i, int j) {
-        int posoriginali = i;
         Cuadricula.revelarCerosAdy(i, j);
-        while (i <= 7) { // revela hacia abajo
+        int posoriginali = i;
+        int posoriginalj = j;
+        while (j >= 0) { // revela hacia la izquierda
+            while (i <= 7) { // revela hacia abajo
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarCerosAdy(i, j);
+                    i++;
+                }
+                else { // si es algo diferente a cero para el ciclo
+                    break;
+                }
+            }
+            i = posoriginali;
+            while (i >= 0) { // revela hacia arriba
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarCerosAdy(i, j);
+                    i--;
+                }
+                else { // si es algo diferente a cero para el ciclo
+                    break;
+                }
+            }
+            i = posoriginali;
             if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                Cuadricula.revelarAdy(i, j);
                 Cuadricula.revelarCerosAdy(i, j);
-                i++;
+                j--;
             }
             else { // si es algo diferente a cero para el ciclo
                 break;
             }
         }
-        i = posoriginali;
-        while (i >= 0) { // revela hacia arriba
-            if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                Cuadricula.revelarAdy(i, j);
-                Cuadricula.revelarCerosAdy(i, j);
-                i--;
+        j = posoriginalj;
+        while (j <= 7) { // revela hacia la derecha
+            while (i <= 7) { // revela hacia abajo
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarCerosAdy(i, j);
+                    i++;
+                }
+                else { // si es algo diferente a cero para el ciclo
+                    break;
+                }
             }
+            i = posoriginali;
+            while (i >= 0) { // revela hacia arriba
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarCerosAdy(i, j);
+                    i--;
+                }
+                else { // si es algo diferente a cero para el ciclo
+                    break;
+                }
+            }
+            i = posoriginali;
+            if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                Cuadricula.revelarCerosAdy(i, j);
+                j++;
+                }
             else { // si es algo diferente a cero para el ciclo
                 break;
             }
-        } 
+        }
     }
 }

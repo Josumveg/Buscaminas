@@ -41,7 +41,7 @@ public class main extends Application{
                 int fila = i;
                 if (j == 7){
                     Cuadricula.matrizboton[fila][col] = new Button();
-                    Cuadricula.matrizvalores[fila][col] = new Cuadricula(0, 0, 0);
+                    Cuadricula.matrizvalores[fila][col] = new Cuadricula(0, 0, 0, false);
                     Cuadricula.matrizboton[fila][col].setTranslateX(posx);
                     Cuadricula.matrizboton[fila][col].setTranslateY(posy);
                     posx = -175;
@@ -65,7 +65,7 @@ public class main extends Application{
                 }
                 else {
                     Cuadricula.matrizboton[fila][col] = new Button();
-                    Cuadricula.matrizvalores[fila][col] = new Cuadricula(0, 0, 0);
+                    Cuadricula.matrizvalores[fila][col] = new Cuadricula(0, 0, 0, false);
                     Cuadricula.matrizboton[fila][col].setTranslateX(posx);
                     Cuadricula.matrizboton[fila][col].setTranslateY(posy);
                     posx = posx+50;
