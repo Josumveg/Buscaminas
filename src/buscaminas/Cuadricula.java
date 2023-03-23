@@ -184,122 +184,62 @@ public class Cuadricula {
         int posoriginali = i;
         int posoriginalj = j;
         while (j >= 0) { // revela hacia la izquierda
-            while (i < 7) { // revela hacia abajo
-                if (Cuadricula.esPosValida(i+1, j)) { // se fija quue no se vaya a salir del array
-                    if (matrizvalores[i+1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                        Cuadricula.revelarAdy(i+1, j);
-                        i++;
-                    }
-                    else { // si es algo diferente a cero para el ciclo
-                        break;
-                    }
-                }
-            }
-            while (i > 0) { // revela hacia arriba
-                if (Cuadricula.esPosValida(i-1, j)) { // se fija quue no se vaya a salir del array
-                    if (matrizvalores[i-1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                        Cuadricula.revelarAdy(i-1, j);
-                        i--;
-                    }
-                    else { // si es algo diferente a cero para el ciclo
-                        break;
-                    }
-                }
-            }
-            i = posoriginali;
-            if (Cuadricula.esPosValida(i, j-1)) { // se fija quue no se vaya a salir del array
-                if (matrizvalores[i][j-1].numrev == 0 ) { // si es un cero revela sus adyacentes
-                    Cuadricula.revelarAdy(i, j-1);
-                    j--;
+            while (i <= 7) { // revela hacia abajo
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarAdy(i, j);
+                    i++;
                 }
                 else { // si es algo diferente a cero para el ciclo
                     break;
                 }
             }
-            else {
-                while (i < 7) { // revela hacia abajo
-                    if (Cuadricula.esPosValida(i+1, j)) { // se fija quue no se vaya a salir del array
-                        if (matrizvalores[i+1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                            Cuadricula.revelarAdy(i+1, j);
-                            i++;
-                        }
-                        else { // si es algo diferente a cero para el ciclo
-                            break;
-                        }
-                    }
+            i = posoriginali;
+            while (i >= 0) { // revela hacia arriba
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarAdy(i, j);
+                    i--;
                 }
-                while (i > 0) { // revela hacia arriba
-                    if (Cuadricula.esPosValida(i-1, j)) { // se fija quue no se vaya a salir del array
-                        if (matrizvalores[i-1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                            Cuadricula.revelarAdy(i-1, j);
-                            i--;
-                        }
-                        else { // si es algo diferente a cero para el ciclo
-                            break;
-                        }
-                    }
+                else { // si es algo diferente a cero para el ciclo
+                    break;
                 }
+            }
+            i = posoriginali;
+            if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                Cuadricula.revelarAdy(i, j);
                 j--;
+            }
+            else { // si es algo diferente a cero para el ciclo
+                break;
             }
         }
         j = posoriginalj;
         while (j <= 7) { // revela hacia la derecha
-            while (i < 7) { // revela hacia abajo
-                if (Cuadricula.esPosValida(i+1, j)) { // se fija quue no se vaya a salir del array
-                    if (matrizvalores[i+1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                        Cuadricula.revelarAdy(i+1, j);
-                        i++;
-                    }
-                    else { // si es algo diferente a cero para el ciclo
-                        break;
-                    }
+            while (i <= 7) { // revela hacia abajo
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarAdy(i, j);
+                    i++;
                 }
-            }
-            while (i > 0) { // revela hacia arriba
-                if (Cuadricula.esPosValida(i-1, j)) { // se fija quue no se vaya a salir del array
-                    if (matrizvalores[i-1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                        Cuadricula.revelarAdy(i-1, j);
-                        i--;
-                    }
-                    else { // si es algo diferente a cero para el ciclo
-                        break;
-                    }
-                }
-            }
-            i = posoriginali;
-            if (Cuadricula.esPosValida(i, j+1)) { // se fija quue no se vaya a salir del array
-                if (matrizvalores[i][j+1].numrev == 0 ) { // si es un cero revela sus adyacentes
-                    Cuadricula.revelarAdy(i, j+1);
-                    j++;
-                    }
                 else { // si es algo diferente a cero para el ciclo
                     break;
                 }
             }
-            else {
-                while (i < 7) { // revela hacia abajo
-                    if (Cuadricula.esPosValida(i+1, j)) { // se fija quue no se vaya a salir del array
-                        if (matrizvalores[i+1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                            Cuadricula.revelarAdy(i+1, j);
-                            i++;
-                        }
-                        else { // si es algo diferente a cero para el ciclo
-                            break;
-                        }
-                    }
+            i = posoriginali;
+            while (i >= 0) { // revela hacia arriba
+                if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                    Cuadricula.revelarAdy(i, j);
+                    i--;
                 }
-                while (i > 0) { // revela hacia arriba
-                    if (Cuadricula.esPosValida(i-1, j)) { // se fija quue no se vaya a salir del array
-                        if (matrizvalores[i-1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                            Cuadricula.revelarAdy(i-1, j);
-                            i--;
-                        }
-                        else { // si es algo diferente a cero para el ciclo
-                            break;
-                        }
-                    }
+                else { // si es algo diferente a cero para el ciclo
+                    break;
                 }
+            }
+            i = posoriginali;
+            if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                Cuadricula.revelarAdy(i, j);
                 j++;
+                }
+            else { // si es algo diferente a cero para el ciclo
+                break;
             }
         }
     }
@@ -308,37 +248,25 @@ public class Cuadricula {
         int posoriginali = i;
         Cuadricula.revelarCerosAdy(i, j);
         while (i <= 7) { // revela hacia abajo
-            if (Cuadricula.esPosValida(i+1, j)) { // se fija quue no se vaya a salir del array
-                if (matrizvalores[i+1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                    Cuadricula.revelarAdy(i, j);
-                    Cuadricula.revelarCerosAdy(i+1, j);
-                    i++;
-                }
-                else { // si es algo diferente a cero para el ciclo
-                    break;
-                }
-            }
-            else {
+            if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                Cuadricula.revelarAdy(i, j);
                 Cuadricula.revelarCerosAdy(i, j);
                 i++;
+            }
+            else { // si es algo diferente a cero para el ciclo
+                break;
             }
         }
         i = posoriginali;
         while (i >= 0) { // revela hacia arriba
-            if (Cuadricula.esPosValida(i-1, j)) { // se fija quue no se vaya a salir del array
-                if (matrizvalores[i-1][j].numrev == 0 ) { // si es un cero revela sus adyacentes
-                    Cuadricula.revelarAdy(i, j);
-                    Cuadricula.revelarCerosAdy(i-1, j);
-                    i--;
-                }
-                else { // si es algo diferente a cero para el ciclo
-                    break;
-                }
-            }
-            else {
+            if (matrizvalores[i][j].numrev == 0 ) { // si es un cero revela sus adyacentes
+                Cuadricula.revelarAdy(i, j);
                 Cuadricula.revelarCerosAdy(i, j);
                 i--;
-            } 
-        }
+            }
+            else { // si es algo diferente a cero para el ciclo
+                break;
+            }
+        } 
     }
 }
