@@ -58,6 +58,7 @@ public class Cuadricula {
             for (int j=0; j<=7; j++) { // indice para recorrer cuadricula
                 if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
                     matrizboton[i][j].setText("*"); // revela la mina
+                    matrizboton[i][j].setStyle("-fx-background-color: #F00000;");
                 }
             }
         }
@@ -130,54 +131,62 @@ public class Cuadricula {
     
     static void revelarAdy(int i, int j) {
         if (esPosValida(i-1, j-1)) {
-            matrizboton[i-1][j-1].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i-1][j-1].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i-1][j-1].revelado = true;
             if (matrizvalores[i-1][j-1].numrev > 0) {
                 matrizboton[i-1][j-1].setText(Integer.toString(matrizvalores[i-1][j-1].numrev));
             }
         }
         if (esPosValida(i-1, j)) {
-            matrizboton[i-1][j].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i-1][j].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i-1][j].revelado = true;
             if (matrizvalores[i-1][j].numrev > 0) {
                 matrizboton[i-1][j].setText(Integer.toString(matrizvalores[i-1][j].numrev));
             }
         }
         if (esPosValida(i-1, j+1)) {
-            matrizboton[i-1][j+1].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i-1][j+1].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i-1][j+1].revelado = true;
             if (matrizvalores[i-1][j+1].numrev > 0) {
                 matrizboton[i-1][j+1].setText(Integer.toString(matrizvalores[i-1][j+1].numrev));
             }
         }
         if (esPosValida(i, j-1)) {
-            matrizboton[i][j-1].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i][j-1].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i][j-1].revelado = true;
             if (matrizvalores[i][j-1].numrev > 0) {
                 matrizboton[i][j-1].setText(Integer.toString(matrizvalores[i][j-1].numrev));
             }
         }
         if (esPosValida(i, j+1)) {
-            matrizboton[i][j+1].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i][j+1].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i][j+1].revelado = true;
             if (matrizvalores[i][j+1].numrev > 0) {
                 matrizboton[i][j+1].setText(Integer.toString(matrizvalores[i][j+1].numrev));
             }
         }
         if (esPosValida(i+1, j-1)) {
-            matrizboton[i+1][j-1].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i+1][j-1].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i+1][j-1].revelado = true;
             if (matrizvalores[i+1][j-1].numrev > 0) {
                 matrizboton[i+1][j-1].setText(Integer.toString(matrizvalores[i+1][j-1].numrev));
             }
         }
         if (esPosValida(i+1, j)) {
-            matrizboton[i+1][j].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i+1][j].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i+1][j].revelado = true;
             if (matrizvalores[i+1][j].numrev > 0) {
                 matrizboton[i+1][j].setText(Integer.toString(matrizvalores[i+1][j].numrev));
             }
         }
         if (esPosValida(i+1, j+1)) {
-            matrizboton[i+1][j+1].setStyle("-fx-background-color: #FFFFFF;");
+            matrizboton[i+1][j+1].setStyle("-fx-background-color: #DADAD7;");
+            matrizvalores[i+1][j+1].revelado = true;
             if (matrizvalores[i+1][j+1].numrev > 0) {
                 matrizboton[i+1][j+1].setText(Integer.toString(matrizvalores[i+1][j+1].numrev));
             }
         }
-        matrizboton[i][j].setStyle("-fx-background-color: #FFFFFF;");
+        matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;");
             
     }
     
