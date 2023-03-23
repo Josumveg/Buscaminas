@@ -52,6 +52,10 @@ public class main extends Application{
                         if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
                             Cuadricula.revelarMinas();
                         }
+                        else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
+                            Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #FFFFFF;");
+                            Cuadricula.revelarCeros(fila, col);
+                        }
                         else {
                             Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
                         }
@@ -71,6 +75,10 @@ public class main extends Application{
                         if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
                             Cuadricula.revelarMinas();
                         }
+                        else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
+                            Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #FFFFFF;");
+                            Cuadricula.revelarCeros(fila, col);
+                        }
                         else {
                             Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
                         }
@@ -84,6 +92,7 @@ public class main extends Application{
         // Valores de la cuadricula
         Cuadricula.generarMinas();
         Cuadricula.generarNumAdy();
+        Cuadricula.revelarMinas();
     }
     
 }
