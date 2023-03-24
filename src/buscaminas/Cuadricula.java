@@ -14,6 +14,7 @@ public class Cuadricula {
     static int countersec = 0;
     static int countermin = 0;
     static boolean gameover = false;
+    static boolean victoria = false;
     static Button [][] matrizboton = new Button[8][8];
     static Cuadricula [][] matrizvalores = new Cuadricula [8][8];
     
@@ -24,10 +25,10 @@ public class Cuadricula {
         this.revelado = revelado;
     }
     
+    static int minminas = 8; // cantidad de minas que apareceran en cuadricula
     static void generarMinas() { //añade minas en orden random a matriz
         Random r = new Random();
         int cantminas = 0; // contador de cantidad de minas
-        int minminas = 8; // cantidad de minas que apareceran en cuadricula
         while (cantminas < minminas){ 
             for (int i=0; i<=7; i++) {
                 for (int j=0; j<=7; j++) { // indices para recorrer matriz
@@ -350,6 +351,30 @@ public class Cuadricula {
         }
         else if (numrandom == 7) {
             matrizboton[i][j].setStyle("-fx-background-color: #ECAB5D;-fx-border-color: #272323;");
+        }
+    }
+    
+    static void checkVictoria() {
+        int cantrevelados = 0;
+        for (int i=0; i<=7; i++) {
+            for (int j=0; j<=7; j++) {
+                if (matrizvalores[i][j].revelado == true) {
+                    cantrevelados++;
+                }
+            }
+        }
+        
+        if (64 - cantrevelados == minminas) {
+            gameover = true;
+            victoria = true;
+            for (int i=0; i<=7; i++) {
+                for (int j=0; j<=7; j++) {
+                    if (esMina(matrizvalores[i][j].mina)) {
+                        matrizboton[i][j].setStyle("-fx-background-color: #87F57A;");
+                    }
+                }
+            }
+            
         }
     }
 }
