@@ -1,10 +1,11 @@
 package buscaminas;
 
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import java.util.Random;
 
 
-public class Cuadricula {
+public class Cuadricula{
     
     int mina;
     int bandera;
@@ -17,6 +18,8 @@ public class Cuadricula {
     static boolean victoria = false;
     static Button [][] matrizboton = new Button[8][8];
     static Cuadricula [][] matrizvalores = new Cuadricula [8][8];
+    static Button botonreset;
+    static Label labelcantminasencontradas;
     
     Cuadricula(int mina, int bandera, int numrev, boolean revelado){
         this.mina = mina;
@@ -64,7 +67,6 @@ public class Cuadricula {
                 if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
                     matrizboton[i][j].setText("*"); // cambia el texto del boton para simbolizar una mina
                     matrizboton[i][j].setStyle("-fx-background-color: #F00000;"); // cambia el color a rojo 
-                    matrizvalores[i][j].revelado = true;
                 }
             }
         }
@@ -327,7 +329,7 @@ public class Cuadricula {
         }
     }
     
-    static void colorAleatorio(int i, int j, int numrandom) {
+    static void colorAleatorio(int i, int j, int numrandom) { // genera un color aleatorio para los botones de la matriz
         if (numrandom == 0) {
             matrizboton[i][j].setStyle("-fx-background-color: #0093ff;-fx-border-color: #272323;");
         }
@@ -363,7 +365,6 @@ public class Cuadricula {
                 }
             }
         }
-        
         if (64 - cantrevelados == minminas) {
             gameover = true;
             victoria = true;

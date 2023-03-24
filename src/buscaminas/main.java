@@ -44,13 +44,13 @@ public class main extends Application{
         labelminasencontradas.setTranslateX(125);
         labelminasencontradas.setTranslateY(-230);
         
-        Label labelcantminasencontradas = new Label();
-        labelcantminasencontradas.setText("0");
-        labelcantminasencontradas.setAlignment(Pos.CENTER);
-        labelcantminasencontradas.setStyle("-fx-background-color: #DADAD7;");
-        labelcantminasencontradas.setMaxSize(50, 30);
-        labelcantminasencontradas.setTranslateX(125);
-        labelcantminasencontradas.setTranslateY(-200);
+        Cuadricula.labelcantminasencontradas = new Label();
+        Cuadricula.labelcantminasencontradas.setText("0");
+        Cuadricula.labelcantminasencontradas.setAlignment(Pos.CENTER);
+        Cuadricula.labelcantminasencontradas.setStyle("-fx-background-color: #DADAD7;");
+        Cuadricula.labelcantminasencontradas.setMaxSize(50, 30);
+        Cuadricula.labelcantminasencontradas.setTranslateX(125);
+        Cuadricula.labelcantminasencontradas.setTranslateY(-200);
         
         Label labeltiempo = new Label();
         labeltiempo.setText("Tiempo");
@@ -119,18 +119,18 @@ public class main extends Application{
         timer.scheduleAtFixedRate(task, 0, 1000l); 
         
         // Boton para hacer restart
-        Button botonreset = new Button();
-        botonreset.setText(":|");
-        botonreset.setStyle("-fx-font-size: 20;");
-        botonreset.setTranslateX(0);
-        botonreset.setTranslateY(-215);
-        botonreset.setMaxSize(50, 50);
+        Cuadricula.botonreset = new Button();
+        Cuadricula.botonreset.setText(":|");
+        Cuadricula.botonreset.setStyle("-fx-font-size: 20;");
+        Cuadricula.botonreset.setTranslateX(0);
+        Cuadricula.botonreset.setTranslateY(-215);
+        Cuadricula.botonreset.setMaxSize(50, 50);
         
-        botonreset.setOnAction(e -> {
+        Cuadricula.botonreset.setOnAction(e -> {
             
-            botonreset.setText(":|");
-            labelcantminasencontradas.setText("0");
             restart();
+            Cuadricula.botonreset.setText(":|");
+            Cuadricula.labelcantminasencontradas.setText("0");
         
         });
         
@@ -151,10 +151,17 @@ public class main extends Application{
         // Boton para Dummy
         Button botondummy = new Button();
         botondummy.setText("DUMMY");
-        botondummy.setStyle("-fx-border-color: #000000;");
+        botondummy.setStyle("-fx-border-color: #B318E5;-fx-border-width: 3");
         botondummy.setTranslateX(-125);
         botondummy.setTranslateY(268);
         botondummy.setMaxSize(125, 10);
+        botondummy.setOnAction(e -> {
+        
+            restart();
+            Computadora.dummyfuncionando = true;
+            Computadora.dummy();
+        
+        });
         
         
         // Boton para Avanzado
@@ -200,27 +207,37 @@ public class main extends Application{
                         Cuadricula.checkVictoria();
                         if (Cuadricula.gameover == false) {
                             if (e.getButton() == MouseButton.PRIMARY) {
-                                if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
-                                    if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
-                                        Cuadricula.revelarMinas();
-                                        Cuadricula.gameover = true;
-                                        botonreset.setText(":(");
+                                if (Cuadricula.matrizvalores[fila][col].revelado == false) {
+                                    if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
+                                        if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
+                                            Cuadricula.revelarMinas();
+                                            Cuadricula.gameover = true;
+                                            Cuadricula.botonreset.setText(":(");
 
+                                        }
+                                        else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
+                                            Cuadricula.revelarCeros(fila, col);
+                                            ajustarMinasEncontradas();
+                                            Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+                                            if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
+                                                Computadora.turno = true;
+                                                Computadora.dummy();
+                                            }
+                                        }
+                                        else {
+                                            Cuadricula.matrizvalores[fila][col].revelado = true;
+                                            Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
+                                            Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;");
+                                            if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
+                                                Computadora.turno = true;
+                                                Computadora.dummy();
+                                            }
+                                        }
+                                    Cuadricula.checkVictoria(); // se checkea si se ha ganado
+                                    if (Cuadricula.victoria == true) {
+                                        Cuadricula.botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
                                     }
-                                    else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
-                                        Cuadricula.revelarCeros(fila, col);
-                                        ajustarMinasEncontradas();
-                                        labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
                                     }
-                                    else {
-                                        Cuadricula.matrizvalores[fila][col].revelado = true;
-                                        Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
-                                        Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;");
-                                    }
-                                Cuadricula.checkVictoria(); // se checkea si se ha ganado
-                                if (Cuadricula.victoria == true) {
-                                    botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
-                                }
                                 }
                             }
                             else if (e.getButton() == MouseButton.SECONDARY) {
@@ -229,13 +246,13 @@ public class main extends Application{
                                         Cuadricula.matrizboton[fila][col].setText("|>");
                                         Cuadricula.matrizvalores[fila][col].bandera = 1;
                                         Cuadricula.cantbanderas++;
-                                        labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+                                        Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
                                     }
                                     else {
                                         Cuadricula.matrizboton[fila][col].setText("");
                                         Cuadricula.matrizvalores[fila][col].bandera = 0;
                                         Cuadricula.cantbanderas--;
-                                        labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+                                        Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
                                     }
                                 }    
                             }
@@ -256,26 +273,36 @@ public class main extends Application{
                         
                         if (Cuadricula.gameover == false) {
                             if (e.getButton() == MouseButton.PRIMARY) {
-                                if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
-                                    if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
-                                        Cuadricula.revelarMinas();
-                                        Cuadricula.gameover = true;
-                                        botonreset.setText(":(");
+                                if (Cuadricula.matrizvalores[fila][col].revelado == false) {
+                                    if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
+                                        if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
+                                            Cuadricula.revelarMinas();
+                                            Cuadricula.gameover = true;
+                                            Cuadricula.botonreset.setText(":(");
+                                        }
+                                        else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
+                                            Cuadricula.revelarCeros(fila, col);
+                                            ajustarMinasEncontradas();
+                                            Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+                                            if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
+                                                Computadora.turno = true;
+                                                Computadora.dummy();
+                                            }
+                                        }
+                                        else {
+                                            Cuadricula.matrizvalores[fila][col].revelado = true;
+                                            Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
+                                            Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;");
+                                            if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
+                                                Computadora.turno = true;
+                                                Computadora.dummy();
+                                            }
+                                        }
+                                    Cuadricula.checkVictoria(); // se checkea si se ha ganado
+                                    if (Cuadricula.victoria == true) {
+                                        Cuadricula.botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
                                     }
-                                    else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
-                                        Cuadricula.revelarCeros(fila, col);
-                                        ajustarMinasEncontradas();
-                                        labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
                                     }
-                                    else {
-                                        Cuadricula.matrizvalores[fila][col].revelado = true;
-                                        Cuadricula.matrizboton[fila][col].setText(Integer.toString(Cuadricula.matrizvalores[fila][col].numrev));
-                                        Cuadricula.matrizboton[fila][col].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;");
-                                    }
-                                Cuadricula.checkVictoria(); // se checkea si se ha ganado
-                                if (Cuadricula.victoria == true) {
-                                    botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
-                                }
                                 }
                             }
                             else if (e.getButton() == MouseButton.SECONDARY) {
@@ -284,13 +311,13 @@ public class main extends Application{
                                         Cuadricula.matrizboton[fila][col].setText("|>");
                                         Cuadricula.matrizvalores[fila][col].bandera = 1;
                                         Cuadricula.cantbanderas++;
-                                        labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+                                        Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
                                     }
                                     else {
                                         Cuadricula.matrizboton[fila][col].setText("");
                                         Cuadricula.matrizvalores[fila][col].bandera = 0;
                                         Cuadricula.cantbanderas--;
-                                        labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+                                        Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
                                     }
                                 }
                             }
@@ -309,18 +336,23 @@ public class main extends Application{
         Cuadricula.generarNumAdy(); // se genera la matriz de numeros de minas adyacentes
         
         //Se añaden los objetos al layout
-        layout.getChildren().addAll(labelminasencontradas, labelcantminasencontradas, 
-        labeltiempo, labelcanttiempo, botonreset, botonexit, labelelegirmodo,
+        layout.getChildren().addAll(labelminasencontradas, Cuadricula.labelcantminasencontradas, 
+        labeltiempo, labelcanttiempo, Cuadricula.botonreset, botonexit, labelelegirmodo,
         botondummy, botonavanzado, botonsugerencia);
         
     }
     
-    void restart() {
+    static void restart() {
         Cuadricula.cantbanderas = 0;
+        Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
         Cuadricula.countersec = -1;
         Cuadricula.countermin = 0;
         Cuadricula.gameover = false;
         Cuadricula.victoria = false;
+        Cuadricula.botonreset.setText(":|");
+        Computadora.dummyfuncionando = false;
+        Computadora.avanzadofuncionando = false;
+        Computadora.turno = false;
         Random r = new Random();
         int numrandom = r.nextInt(8);
         for (int i=0; i<=7; i++) {
@@ -338,7 +370,7 @@ public class main extends Application{
         
     }
     
-    void ajustarMinasEncontradas() {
+    static void ajustarMinasEncontradas() {
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) {
                 if (Cuadricula.matrizvalores[i][j].bandera == 1 && Cuadricula.matrizvalores[i][j].revelado && Cuadricula.matrizvalores[i][j].numrev == 0) {
@@ -352,6 +384,37 @@ public class main extends Application{
                     Cuadricula.matrizvalores[i][j].bandera = 0;
                 }
             }
+        }
+    }
+    static void elegirEspacio(int i, int j) {
+        Random r = new Random();
+        while (Cuadricula.matrizvalores[i][j].revelado == true) {
+            i = r.nextInt(8);
+            j = r.nextInt(8);
+        }
+        
+        if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) {
+            Cuadricula.revelarMinas();
+            Cuadricula.gameover = true;
+            Cuadricula.botonreset.setText(":(");
+
+        }
+        else if (Cuadricula.matrizvalores[i][j].numrev == 0){
+            Cuadricula.revelarCeros(i, j);
+            ajustarMinasEncontradas();
+            Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #B318E5;-fx-border-width: 3");
+        }
+        else {
+            Cuadricula.matrizvalores[i][j].revelado = true;
+            Cuadricula.matrizboton[i][j].setText(Integer.toString(Cuadricula.matrizvalores[i][j].numrev));
+            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #B318E5;-fx-border-width: 3");
+            ajustarMinasEncontradas();
+            Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+        }
+        Cuadricula.checkVictoria(); // se checkea si se ha ganado
+        if (Cuadricula.victoria == true) {
+            Cuadricula.botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
         }
     }
 }
