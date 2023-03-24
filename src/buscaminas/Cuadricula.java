@@ -73,6 +73,17 @@ public class Cuadricula{
                 
     }
     
+    static void revelarMinasDummy(){
+        for (int i=0; i<=7; i++) {
+            for (int j=0; j<=7; j++) { // indice para recorrer cuadricula
+                if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
+                    matrizboton[i][j].setText("*"); // cambia el texto del boton para simbolizar una mina
+                    matrizboton[i][j].setStyle("-fx-background-color: #0027FF;-fx-text-fill: white;"); // cambia el color a rojo 
+                }
+            }
+        }
+    }
+    
     static boolean esPosValida(int i, int j) {
         if (i < 0 || j < 0 || i > 7 || j > 7){ // se fija que los indices no se salgan del array
             return false; // si se salen retorna false
@@ -376,6 +387,15 @@ public class Cuadricula{
                 }
             }
             
+        }
+    }
+    static void updateCuadricula() {
+        for (int i=0; i<=7; i++) {
+            for (int j=0; j<=7; j++) {
+                if (matrizvalores[i][j].revelado == true) {
+                    matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;");
+                }
+            }
         }
     }
 }

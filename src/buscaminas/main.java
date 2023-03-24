@@ -151,7 +151,7 @@ public class main extends Application{
         // Boton para Dummy
         Button botondummy = new Button();
         botondummy.setText("DUMMY");
-        botondummy.setStyle("-fx-border-color: #B318E5;-fx-border-width: 3");
+        botondummy.setStyle("-fx-border-color: #0027FF;-fx-border-width: 3");
         botondummy.setTranslateX(-125);
         botondummy.setTranslateY(268);
         botondummy.setMaxSize(125, 10);
@@ -184,10 +184,10 @@ public class main extends Application{
             
         // Matriz de botones
         
+        Random r = new Random();
+        int numrandom = r.nextInt(8); // numero random que se usa para el color de la cuadricula
         int posx = -175;
         int posy = -150;
-        Random r = new Random();
-        int numrandom = r.nextInt(8);
         
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) {
@@ -394,7 +394,8 @@ public class main extends Application{
         }
         
         if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) {
-            Cuadricula.revelarMinas();
+            Cuadricula.updateCuadricula();
+            Cuadricula.revelarMinasDummy();
             Cuadricula.gameover = true;
             Cuadricula.botonreset.setText(":(");
 
@@ -403,12 +404,14 @@ public class main extends Application{
             Cuadricula.revelarCeros(i, j);
             ajustarMinasEncontradas();
             Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
-            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #B318E5;-fx-border-width: 3");
+            Cuadricula.updateCuadricula();
+            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #0027FF;-fx-border-width: 3");
         }
         else {
             Cuadricula.matrizvalores[i][j].revelado = true;
             Cuadricula.matrizboton[i][j].setText(Integer.toString(Cuadricula.matrizvalores[i][j].numrev));
-            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #B318E5;-fx-border-width: 3");
+            Cuadricula.updateCuadricula();
+            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #0027FF;-fx-border-width: 3");
             ajustarMinasEncontradas();
             Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
         }
