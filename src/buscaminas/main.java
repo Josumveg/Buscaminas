@@ -167,10 +167,17 @@ public class main extends Application{
         // Boton para Avanzado
         Button botonavanzado = new Button();
         botonavanzado.setText("AVANZADO");
-        botonavanzado.setStyle("-fx-border-color: #000000;");
+        botonavanzado.setStyle("-fx-border-color: #DA0000;-fx-border-width: 3");
         botonavanzado.setTranslateX(-125);
         botonavanzado.setTranslateY(295);
         botonavanzado.setMaxSize(125, 10);
+        botonavanzado.setOnAction(e -> {
+        
+            restart();
+            Computadora.avanzadofuncionando = true;
+            Computadora.avanzado();
+        
+        });
         
         // Boton para sugerencia
         Button botonsugerencia = new Button();
@@ -202,6 +209,7 @@ public class main extends Application{
                     posy = posy+50;
                     Cuadricula.matrizboton[fila][col].setMaxSize(50,50);
                     Cuadricula.colorAleatorio(fila, col, numrandom);
+                    layout.getChildren().add(Cuadricula.matrizboton[fila][col]);
                     Cuadricula.matrizboton[fila][col].setOnMouseClicked(e -> {
                         
                         Cuadricula.checkVictoria();
@@ -213,7 +221,6 @@ public class main extends Application{
                                             Cuadricula.revelarMinas();
                                             Cuadricula.gameover = true;
                                             Cuadricula.botonreset.setText(":(");
-
                                         }
                                         else if (Cuadricula.matrizvalores[fila][col].numrev == 0){
                                             Cuadricula.revelarCeros(fila, col);
@@ -223,6 +230,10 @@ public class main extends Application{
                                                 Computadora.turno = true;
                                                 Computadora.dummy();
                                             }
+                                            else if (Computadora.avanzadofuncionando == true) {
+                                                Computadora.turno = true;
+                                                Computadora.avanzado();
+                                            }
                                         }
                                         else {
                                             Cuadricula.matrizvalores[fila][col].revelado = true;
@@ -231,6 +242,10 @@ public class main extends Application{
                                             if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
                                                 Computadora.turno = true;
                                                 Computadora.dummy();
+                                            }
+                                            else if (Computadora.avanzadofuncionando == true) {
+                                                Computadora.turno = true;
+                                                Computadora.avanzado();
                                             }
                                         }
                                     Cuadricula.checkVictoria(); // se checkea si se ha ganado
@@ -257,9 +272,7 @@ public class main extends Application{
                                 }    
                             }
                         }
-                    
                     });
-                    layout.getChildren().add(Cuadricula.matrizboton[fila][col]);
                 }
                 else {
                     Cuadricula.matrizboton[fila][col] = new Button();
@@ -269,6 +282,7 @@ public class main extends Application{
                     posx = posx+50;
                     Cuadricula.matrizboton[fila][col].setMaxSize(50,50);
                     Cuadricula.colorAleatorio(fila, col, numrandom);
+                    layout.getChildren().add(Cuadricula.matrizboton[fila][col]);
                     Cuadricula.matrizboton[fila][col].setOnMouseClicked(e -> {
                         
                         if (Cuadricula.gameover == false) {
@@ -288,6 +302,10 @@ public class main extends Application{
                                                 Computadora.turno = true;
                                                 Computadora.dummy();
                                             }
+                                            else if (Computadora.avanzadofuncionando == true) {
+                                                Computadora.turno = true;
+                                                Computadora.avanzado();
+                                            }
                                         }
                                         else {
                                             Cuadricula.matrizvalores[fila][col].revelado = true;
@@ -296,6 +314,10 @@ public class main extends Application{
                                             if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
                                                 Computadora.turno = true;
                                                 Computadora.dummy();
+                                            }
+                                            else if (Computadora.avanzadofuncionando == true) {
+                                                Computadora.turno = true;
+                                                Computadora.avanzado();
                                             }
                                         }
                                     Cuadricula.checkVictoria(); // se checkea si se ha ganado
@@ -322,9 +344,7 @@ public class main extends Application{
                                 }
                             }
                         }
-                    
                     });
-                    layout.getChildren().add(Cuadricula.matrizboton[fila][col]); 
                 }
             }
         }
@@ -353,6 +373,8 @@ public class main extends Application{
         Computadora.dummyfuncionando = false;
         Computadora.avanzadofuncionando = false;
         Computadora.turno = false;
+        Computadora.listaminas.empty();
+        Computadora.listasegura.empty();
         Random r = new Random();
         int numrandom = r.nextInt(8);
         for (int i=0; i<=7; i++) {
@@ -386,7 +408,8 @@ public class main extends Application{
             }
         }
     }
-    static void elegirEspacio(int i, int j) {
+    
+    static void elegirEspacioDummy(int i, int j) {
         if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) {
             Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
             Cuadricula.revelarMinasDummy();
@@ -406,6 +429,35 @@ public class main extends Application{
             Cuadricula.matrizboton[i][j].setText(Integer.toString(Cuadricula.matrizvalores[i][j].numrev));
             Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
             Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #0027FF;-fx-border-width: 3");
+            ajustarMinasEncontradas();
+            Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+        }
+        Cuadricula.checkVictoria(); // se checkea si se ha ganado
+        if (Cuadricula.victoria == true) {
+            Cuadricula.botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
+        }
+    }
+    
+    static void elegirEspacioAvanzado(int i, int j) {
+        if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) {
+            Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
+            Cuadricula.revelarMinasAvanzado();
+            Cuadricula.gameover = true;
+            Cuadricula.botonreset.setText(":(");
+
+        }
+        else if (Cuadricula.matrizvalores[i][j].numrev == 0){
+            Cuadricula.revelarCeros(i, j);
+            ajustarMinasEncontradas(); 
+            Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
+            Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
+            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #DA0000;-fx-border-width: 3");
+        }
+        else {
+            Cuadricula.matrizvalores[i][j].revelado = true;
+            Cuadricula.matrizboton[i][j].setText(Integer.toString(Cuadricula.matrizvalores[i][j].numrev));
+            Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
+            Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #DA0000;-fx-border-width: 3");
             ajustarMinasEncontradas();
             Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
         }

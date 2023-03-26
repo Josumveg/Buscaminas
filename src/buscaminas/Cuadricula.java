@@ -84,6 +84,17 @@ public class Cuadricula{
         }
     }
     
+    static void revelarMinasAvanzado(){
+        for (int i=0; i<=7; i++) {
+            for (int j=0; j<=7; j++) { // indice para recorrer cuadricula
+                if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
+                    matrizboton[i][j].setText("*"); // cambia el texto del boton para simbolizar una mina
+                    matrizboton[i][j].setStyle("-fx-background-color: #DA0000;-fx-text-fill: white;"); // cambia el color a rojo 
+                }
+            }
+        }
+    }
+    
     static boolean esPosValida(int i, int j) {
         if (i < 0 || j < 0 || i > 7 || j > 7){ // se fija que los indices no se salgan del array
             return false; // si se salen retorna false
@@ -397,5 +408,95 @@ public class Cuadricula{
                 }
             }
         }
+    }
+    
+    static int cantMinasAdy(int i, int j) {
+        int cantminas = 0;
+        if (esPosValida(i, j+1)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i, j+1)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        if (esPosValida(i+1, j+1)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i+1, j+1)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        if (esPosValida(i-1, j+1)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i-1, j+1)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        if (esPosValida(i+1, j)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i+1, j)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        if (esPosValida(i-1, j)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i-1, j)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        if (esPosValida(i, j-1)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i, j-1)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        if (esPosValida(i+1, j-1)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i+1, j-1)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        if (esPosValida(i-1, j-1)) { // se revisa que los indices no se salgan del array
+            if (Computadora.listaminas.contains(i-1, j-1)) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantminas++;
+            }
+        }
+        return cantminas;
+    }
+    
+    static int cantidadReveladosAdy(int i, int j) {
+        int cantrevelados = 0;
+        if (esPosValida(i, j+1)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i][j+1].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        if (esPosValida(i+1, j+1)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i+1][j+1].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        if (esPosValida(i-1, j+1)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i-1][j+1].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        if (esPosValida(i+1, j)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i+1][j].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        if (esPosValida(i-1, j)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i-1][j].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        if (esPosValida(i, j-1)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i][j-1].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        if (esPosValida(i+1, j-1)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i+1][j-1].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        if (esPosValida(i-1, j-1)) { // se revisa que los indices no se salgan del array
+            if (matrizvalores[i-1][j-1].revelado == true) { // si el numero a revelar tiene minas alrededor, se pone el numero de minas alrededor
+                cantrevelados++;
+            }
+        }
+        return cantrevelados;
     }
 }
