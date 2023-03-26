@@ -387,14 +387,8 @@ public class main extends Application{
         }
     }
     static void elegirEspacio(int i, int j) {
-        Random r = new Random();
-        while (Cuadricula.matrizvalores[i][j].revelado == true) {
-            i = r.nextInt(8);
-            j = r.nextInt(8);
-        }
-        
         if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) {
-            Cuadricula.updateCuadricula();
+            Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
             Cuadricula.revelarMinasDummy();
             Cuadricula.gameover = true;
             Cuadricula.botonreset.setText(":(");
@@ -402,15 +396,15 @@ public class main extends Application{
         }
         else if (Cuadricula.matrizvalores[i][j].numrev == 0){
             Cuadricula.revelarCeros(i, j);
-            ajustarMinasEncontradas();
+            ajustarMinasEncontradas(); 
             Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
-            Cuadricula.updateCuadricula();
+            Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
             Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #0027FF;-fx-border-width: 3");
         }
         else {
             Cuadricula.matrizvalores[i][j].revelado = true;
             Cuadricula.matrizboton[i][j].setText(Integer.toString(Cuadricula.matrizvalores[i][j].numrev));
-            Cuadricula.updateCuadricula();
+            Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
             Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #0027FF;-fx-border-width: 3");
             ajustarMinasEncontradas();
             Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas));
