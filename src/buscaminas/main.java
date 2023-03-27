@@ -73,6 +73,17 @@ public class main extends Application{
         labelelegirmodo.setTranslateX(-125);
         labelelegirmodo.setTranslateY(275);
         
+        Label labelerror = new Label();
+        labelerror.setText("");
+        labelerror.setStyle("-fx-background-color: #FF0000;-fx-text-fill: white;");
+        labelerror.setTranslateX(0);
+        labelerror.setTranslateY(-275);
+        
+        Cuadricula.labelcantsugerencias = new Label();
+        Cuadricula.labelcantsugerencias.setText("0");
+        Cuadricula.labelcantsugerencias.setTranslateX(200);
+        Cuadricula.labelcantsugerencias.setTranslateY(275);
+        
         // Implementacion de Timer 
         Timer timer = new Timer();
         TimerTask task = new TimerTask() {
@@ -182,14 +193,43 @@ public class main extends Application{
         // Boton para sugerencia
         Button botonsugerencia = new Button();
         botonsugerencia.setText("  Solicitar\nSugerencia");
-        botonsugerencia.setStyle("-fx-border-color: #000000;");
+        botonsugerencia.setStyle("-fx-border-color: #12CA00;-fx-border-width: 3");
         botonsugerencia.setTranslateX(125);
         botonsugerencia.setTranslateY(275);
         botonsugerencia.setMaxSize(125, 50);
         botonsugerencia.setAlignment(Pos.CENTER);
         botonsugerencia.setOnAction(e -> {
             
-            
+            if (Cuadricula.gameover == false) {
+                if (Cuadricula.cantsugerencias > 0) {
+                    Cuadricula.generarStackSugerencias();
+                    if (Cuadricula.stacksugerencia.size() > 0) {
+                        try {
+                            while(Cuadricula.matrizvalores[Cuadricula.stacksugerencia.peek()[0]][Cuadricula.stacksugerencia.peek()[1]].revelado == true) {
+                                Cuadricula.stacksugerencia.pop();
+                            }
+                            if (Cuadricula.stacksugerencia.size() == 0) {
+                                labelerror.setText("No hay sugerencias posibles");
+                            }
+                            else {
+                                Cuadricula.matrizboton[Cuadricula.stacksugerencia.peek()[0]][Cuadricula.stacksugerencia.peek()[1]].setStyle("-fx-background-color: #12CA00;");
+                                Cuadricula.stacksugerencia.pop();
+                                Cuadricula.cantsugerencias--;
+                                Cuadricula.labelcantsugerencias.setText(Integer.toString(Cuadricula.cantsugerencias));
+                            }
+                        }
+                        catch (Exception except) {
+                            labelerror.setText("No hay sugerencias posibles");
+                        }
+                    }
+                    else {
+                        labelerror.setText("No hay sugerencias posibles");
+                    }
+                }
+                else {
+                    labelerror.setText("Solo se puede obtener una sugerencia cada 5 turnos");
+                }
+            }
         
         });
             
@@ -216,11 +256,16 @@ public class main extends Application{
                     layout.getChildren().add(Cuadricula.matrizboton[fila][col]);
                     Cuadricula.matrizboton[fila][col].setOnMouseClicked(e -> {
                         
-                        Cuadricula.checkVictoria();
+                        labelerror.setText("");
                         if (Cuadricula.gameover == false) {
                             if (e.getButton() == MouseButton.PRIMARY) {
                                 if (Cuadricula.matrizvalores[fila][col].revelado == false) {
                                     if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
+                                        Cuadricula.cantturnos++;
+                                        if (Cuadricula.cantturnos % 5 == 0) {
+                                            Cuadricula.cantsugerencias++;
+                                            Cuadricula.labelcantsugerencias.setText(Integer.toString(Cuadricula.cantsugerencias));
+                                        }
                                         if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
                                             Cuadricula.revelarMinas();
                                             Cuadricula.gameover = true;
@@ -289,10 +334,16 @@ public class main extends Application{
                     layout.getChildren().add(Cuadricula.matrizboton[fila][col]);
                     Cuadricula.matrizboton[fila][col].setOnMouseClicked(e -> {
                         
+                        labelerror.setText("");
                         if (Cuadricula.gameover == false) {
                             if (e.getButton() == MouseButton.PRIMARY) {
                                 if (Cuadricula.matrizvalores[fila][col].revelado == false) {
                                     if (Cuadricula.matrizvalores[fila][col].bandera == 0) {
+                                        Cuadricula.cantturnos++;
+                                        if (Cuadricula.cantturnos % 5 == 0) {
+                                            Cuadricula.cantsugerencias++;
+                                            Cuadricula.labelcantsugerencias.setText(Integer.toString(Cuadricula.cantsugerencias));
+                                        }
                                         if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) {
                                             Cuadricula.revelarMinas();
                                             Cuadricula.gameover = true;
@@ -362,7 +413,7 @@ public class main extends Application{
         //Se añaden los objetos al layout
         layout.getChildren().addAll(labelminasencontradas, Cuadricula.labelcantminasencontradas, 
         labeltiempo, labelcanttiempo, Cuadricula.botonreset, botonexit, labelelegirmodo,
-        botondummy, botonavanzado, botonsugerencia);
+        botondummy, botonavanzado, botonsugerencia, labelerror, Cuadricula.labelcantsugerencias);
         
     }
     
@@ -383,6 +434,13 @@ public class main extends Application{
         Computadora.listasegura.empty();
         Computadora.listageneral.empty();
         Computadora.listaincertidumbre.empty();
+        Computadora.listaminas.resetSize();
+        Computadora.listasegura.resetSize();
+        Computadora.listageneral.resetSize();
+        Computadora.listaincertidumbre.resetSize();
+        Cuadricula.emptyStack(Cuadricula.stacksugerencia);
+        Cuadricula.stacksugerencia.resetSize();
+        Cuadricula.labelcantsugerencias.setText("0");
         Random r = new Random();
         int numrandom = r.nextInt(8);
         for (int i=0; i<=7; i++) {

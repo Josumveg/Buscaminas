@@ -23,6 +23,7 @@ public class Cuadricula{
     static Stack stacksugerencia = new Stack();
     static Button botonreset;
     static Label labelcantminasencontradas;
+    static Label labelcantsugerencias;
     
     Cuadricula(int mina, int bandera, int numrev, boolean revelado){
         this.mina = mina;
@@ -507,8 +508,6 @@ public class Cuadricula{
         Computadora.generarListaMinas();
         Computadora.generarListaGeneral();
         Computadora.generarListasSegIncert();
-        Computadora.updateLista(Computadora.listasegura);
-        Computadora.updateLista(Computadora.listaincertidumbre);
         int counter = 0;
         if (Computadora.listasegura.isEmpty() == false) {
             while (counter < Computadora.listasegura.size()) {
@@ -519,8 +518,7 @@ public class Cuadricula{
     }
     
     static void emptyStack(Stack stack) {
-        int counter = 0;
-        while (counter < stack.size()) {
+        while (stack.size() > 0) {
             stack.pop();
         }
     }

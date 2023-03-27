@@ -181,4 +181,8 @@ public class ListaEnlazada {
         }
     }
     
+    public void resetSize() {
+        this.size = 0;
+    }
+    
 }

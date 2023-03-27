@@ -22,4 +22,8 @@ public class Stack {
     public int size() {
         return this.size;
     }
+    
+    public void resetSize() {
+        this.size = 0;
+    }
 }
