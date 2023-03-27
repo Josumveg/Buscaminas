@@ -14,10 +14,12 @@ public class Cuadricula{
     static int cantbanderas = 0;
     static int countersec = 0;
     static int countermin = 0;
+    static int cantturnos = 0;
     static boolean gameover = false;
     static boolean victoria = false;
     static Button [][] matrizboton = new Button[8][8];
     static Cuadricula [][] matrizvalores = new Cuadricula [8][8];
+    static Stack stacksugerencia = new Stack();
     static Button botonreset;
     static Label labelcantminasencontradas;
     
@@ -498,5 +500,25 @@ public class Cuadricula{
             }
         }
         return cantrevelados;
+    }
+    
+    static void generarStackSugerencias() {
+        Computadora.generarListaMinas();
+        Computadora.generarListaSegura();
+        Computadora.updateListaSegura();
+        int counter = 0;
+        if (Computadora.listasegura.isEmpty() == false) {
+            while (counter < Computadora.listasegura.size()) {
+                stacksugerencia.push(Computadora.listasegura.get(counter));
+                counter++;
+            }
+        }
+    }
+    
+    static void emptyStack(Stack stack) {
+        int counter = 0;
+        while (counter < stack.size()) {
+            stack.pop();
+        }
     }
 }

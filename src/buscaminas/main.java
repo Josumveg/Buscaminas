@@ -187,7 +187,16 @@ public class main extends Application{
         botonsugerencia.setTranslateY(275);
         botonsugerencia.setMaxSize(125, 50);
         botonsugerencia.setAlignment(Pos.CENTER);
+        botonsugerencia.setOnAction(e -> {
+            
+            if (Cuadricula.cantturnos % 5 ==0){
+                Cuadricula.generarStackSugerencias();
+                System.out.println(Cuadricula.stacksugerencia.size());
+                Cuadricula.emptyStack(Cuadricula.stacksugerencia);
+                System.out.println(Cuadricula.stacksugerencia.size());
+            }
         
+        });
             
         // Matriz de botones
         

@@ -140,8 +140,19 @@ public class ListaEnlazada {
         }
     }
     
-    /**public int[] get(int searchValue) {
-        
-    }**/
+    public int[] get(int searchValue) {
+        Node current = this.head;
+        int counter = 0;
+        while (current != null) {
+            if (counter == searchValue) {
+                return current.getData();
+            }
+            else {
+                current = current.getNext();
+                counter++;
+            }
+        }
+        return null;
+    }
     
 }
