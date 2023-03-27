@@ -32,9 +32,17 @@ public class Computadora extends main{
         if (turno == true) {
             generarListaMinas();
             generarListaGeneral();
+            Cuadricula.printLista(listageneral, "lista general");
+            System.out.println(" ");
             generarListasSegIncert();
             updateLista(listasegura);
             updateLista(listaincertidumbre);
+            Cuadricula.printLista(listasegura, "lista segura");
+            System.out.println(" ");
+            Cuadricula.printLista(listaincertidumbre, "lista incertidumbre");
+            System.out.println(" ");
+            Cuadricula.printLista(listageneral, "lista general");
+            System.out.println(" ");
             if (listasegura.isEmpty()) {
                 elegirEspacioAvanzado(listaincertidumbre.getFirst()[0], listaincertidumbre.getFirst()[1]);
                 listaincertidumbre.deleteFirstNotReturn();
@@ -242,7 +250,9 @@ public class Computadora extends main{
             numrandom = r.nextInt(listageneral.size()); // genera un numero random del tamaño de la lista general para funcionar como indice
             addEspacioSeguro(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]); // se añaden los numeros del indice correspondiente a la lista segura
             if (listasegura.contains(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]) == false) {
-                listaincertidumbre.insertFirst(new int[] {listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]}); // si no se agregan a la lista segura, se agregan a la incertidumbre
+                if (listaincertidumbre.contains(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]) == false) {
+                    listaincertidumbre.insertFirst(new int[] {listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]}); // si no se agregan a la lista segura, se agregan a la incertidumbre
+                }
             }
             listageneral.deleteIndex(numrandom); // borra el numero elegido de la lista general
         }

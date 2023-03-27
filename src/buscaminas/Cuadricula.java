@@ -522,4 +522,13 @@ public class Cuadricula{
             stack.pop();
         }
     }
+    
+    static void printLista(ListaEnlazada lista, String nombrelista) {
+        int counter = 0;
+        System.out.print("Contenido de " + nombrelista + " ");
+        while (counter < lista.size()) {
+            System.out.print("(" + lista.get(counter)[0] + "," + lista.get(counter)[1] + ")");
+            counter++;
+        }
+    }
 }
