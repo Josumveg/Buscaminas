@@ -52,37 +52,23 @@ public class ListaEnlazada {
         this.size++;
     }
 
-    public Node deleteFirst() {
+    public int[] deleteFirst() {
         if (this.head != null) {
             Node temp = this.head;
             this.head = this.head.next;
             this.size--;
-            return temp;
+            return temp.getData();
         }
         else {
             return null;
         }
     }
-
-    public void DisplayList() {
-        Node current = this.head;
-        while (current != null) {
-            System.out.println(current.getData());
-            current = current.getNext();
+    
+    public void deleteFirstNotReturn() {
+        if (this.head != null) {
+            this.head = this.head.next;
+            this.size--;
         }
-    }
-
-    public int[] find(int[] searchValue) {
-        Node current = this.head;
-        while (current != null) {
-            if (current.getData().equals(searchValue)) {
-                return current.getData();
-            }
-            else {
-                current = current.getNext();
-            }
-        }
-        return null;
     }
 
     public int[] delete(int i, int j) {
@@ -144,5 +130,18 @@ public class ListaEnlazada {
     public void empty() {
         this.head = null;
     }
+    
+    public int[] getHead() {
+        if (this.head == null) {
+            return null;
+        }
+        else {
+            return this.head.getData();
+        }
+    }
+    
+    /**public int[] get(int searchValue) {
+        
+    }**/
     
 }

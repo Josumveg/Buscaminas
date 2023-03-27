@@ -43,7 +43,7 @@ public class Computadora extends main{
             }
             else {
                 elegirEspacioAvanzado(listasegura.getFirst()[0], listasegura.getFirst()[1]);
-                listasegura.deleteFirst();
+                listasegura.deleteFirstNotReturn();
             }
             turno = false;
         }
