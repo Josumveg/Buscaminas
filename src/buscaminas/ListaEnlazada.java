@@ -155,4 +155,30 @@ public class ListaEnlazada {
         return null;
     }
     
+    public void deleteIndex(int i) {
+        Node current = this.head;
+        Node previous = this.head;
+        int counter = 0;
+
+        while (current != null) {
+            if (counter == i) {
+                if (current == this.head) {
+                    this.head = this.head.getNext();
+                    counter++;
+                    this.size--;
+                }
+                else {
+                    previous.setNext(current.getNext());
+                    counter++;
+                    this.size--;
+                }
+            }
+            else {
+                previous = current;
+                current = current.getNext();
+                counter++;
+            }
+        }
+    }
+    
 }

@@ -189,12 +189,7 @@ public class main extends Application{
         botonsugerencia.setAlignment(Pos.CENTER);
         botonsugerencia.setOnAction(e -> {
             
-            if (Cuadricula.cantturnos % 5 ==0){
-                Cuadricula.generarStackSugerencias();
-                System.out.println(Cuadricula.stacksugerencia.size());
-                Cuadricula.emptyStack(Cuadricula.stacksugerencia);
-                System.out.println(Cuadricula.stacksugerencia.size());
-            }
+            
         
         });
             
@@ -378,12 +373,16 @@ public class main extends Application{
         Cuadricula.countermin = 0;
         Cuadricula.gameover = false;
         Cuadricula.victoria = false;
+        Cuadricula.cantturnos = 0;
+        Cuadricula.cantsugerencias = 0;
         Cuadricula.botonreset.setText(":|");
         Computadora.dummyfuncionando = false;
         Computadora.avanzadofuncionando = false;
         Computadora.turno = false;
         Computadora.listaminas.empty();
         Computadora.listasegura.empty();
+        Computadora.listageneral.empty();
+        Computadora.listaincertidumbre.empty();
         Random r = new Random();
         int numrandom = r.nextInt(8);
         for (int i=0; i<=7; i++) {

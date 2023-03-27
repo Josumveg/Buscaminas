@@ -15,6 +15,7 @@ public class Cuadricula{
     static int countersec = 0;
     static int countermin = 0;
     static int cantturnos = 0;
+    static int cantsugerencias = 0;
     static boolean gameover = false;
     static boolean victoria = false;
     static Button [][] matrizboton = new Button[8][8];
@@ -504,8 +505,10 @@ public class Cuadricula{
     
     static void generarStackSugerencias() {
         Computadora.generarListaMinas();
-        Computadora.generarListaSegura();
-        Computadora.updateListaSegura();
+        Computadora.generarListaGeneral();
+        Computadora.generarListasSegIncert();
+        Computadora.updateLista(Computadora.listasegura);
+        Computadora.updateLista(Computadora.listaincertidumbre);
         int counter = 0;
         if (Computadora.listasegura.isEmpty() == false) {
             while (counter < Computadora.listasegura.size()) {
