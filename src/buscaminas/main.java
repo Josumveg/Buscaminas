@@ -610,7 +610,7 @@ public class main extends Application{
      * valores iniciales para reiniciar
      * el juego. 
      */
-    static void restart() {
+    public static void restart() {
         Cuadricula.cantbanderas = 0; // se reinicia la cantidad de banderas 
         Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se reinicia el label de cantidad de minas encontradas 
         Cuadricula.countersec = -1; // se reinicia el contador de segundos 
@@ -656,7 +656,7 @@ public class main extends Application{
      * ciclo for. Si hay una bandera y el espacio ya se ha revelado, 
      * se quita la bandera. 
      */
-    static void ajustarMinasEncontradas() {
+    public static void ajustarMinasEncontradas() {
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) {
                 if (Cuadricula.matrizvalores[i][j].bandera == 1 && Cuadricula.matrizvalores[i][j].revelado && Cuadricula.matrizvalores[i][j].numrev == 0) { // si hay una bandera, el espacio se ha revelado y el numero es un 0
@@ -684,7 +684,7 @@ public class main extends Application{
      * @param i fila del espacio que se va a revelar 
      * @param j columna del espacio que se va a revelar
      */
-    static void elegirEspacioDummy(int i, int j) {
+    public static void elegirEspacioDummy(int i, int j) {
         if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) { // si el espacio es una mina 
             Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el dummy
             Cuadricula.revelarMinasDummy(); // revela las minas en el color que representa al dummt 
@@ -724,7 +724,7 @@ public class main extends Application{
      * @param i fila del espacio que se va a revelar 
      * @param j columna del espacio que se va a revelar
      */
-    static void elegirEspacioAvanzado(int i, int j) {
+    public static void elegirEspacioAvanzado(int i, int j) {
         Cuadricula.checkVictoria(); // se llama al metodo para verificar si se ha ganado 
         if (Cuadricula.victoria == false) { // se verifica si se ha ganado 
             if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) { // si el espacio elegido es una mina 

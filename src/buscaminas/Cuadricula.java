@@ -43,7 +43,7 @@ public class Cuadricula{
      * El metodo depende de la variable minminas. Si esta
      * cambia la cantidad de minas en la matriz cambia de igual manera. 
      */
-    static void generarMinas() { //añade minas en orden random a matriz
+    public static void generarMinas() { //añade minas en orden random a matriz
         Random r = new Random();
         int cantminas = 0; // contador de cantidad de minas
         while (cantminas < minminas){ 
@@ -73,7 +73,7 @@ public class Cuadricula{
      * @param x la variable mina en un espacio determinado de la matriz valores
      * @return true si es una mina, false en caso contrario
      */
-    static boolean esMina(int x) { // se fija si hay una mina en la cuadricula
+    public static boolean esMina(int x) { // se fija si hay una mina en la cuadricula
         if (x==1 || x==-1) { // si x es 1 o -1, significa que hay una mina en el espacio
             return true; // retorna true si la hay 
         }
@@ -88,7 +88,7 @@ public class Cuadricula{
      * se les pone un texto con * para representar
      * la mina
      */
-    static void revelarMinas() { //revela las minas de la cuadricula (Game over)
+    public static void revelarMinas() { //revela las minas de la cuadricula (Game over)
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) { // indice para recorrer cuadricula
                 if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
@@ -106,7 +106,7 @@ public class Cuadricula{
      * se les pone un texto con * para representar
      * la mina
      */
-    static void revelarMinasDummy(){
+    public static void revelarMinasDummy(){
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) { // indice para recorrer cuadricula
                 if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
@@ -123,7 +123,7 @@ public class Cuadricula{
      * al avanzado y se les pone un texto con * para 
      * representar la mina
      */
-    static void revelarMinasAvanzado(){
+    public static void revelarMinasAvanzado(){
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) { // indice para recorrer cuadricula
                 if (Cuadricula.esMina(matrizvalores[i][j].mina)) { // se fija si hay una mina
@@ -142,7 +142,7 @@ public class Cuadricula{
      * @param j columna en la que se encuentra el espacio
      * @return true si el espacio esta dentro del arreglo, false en caso contrario
      */
-    static boolean esPosValida(int i, int j) {
+    public static boolean esPosValida(int i, int j) {
         if (i < 0 || j < 0 || i > 7 || j > 7){ // se fija que los indices no se salgan del array
             return false; // si se salen retorna false
         }
@@ -157,7 +157,7 @@ public class Cuadricula{
      * numrev en la matriz de valores. Esto
      * se hace para todos los espacios en la matriz. 
      */
-    static void generarNumAdy() { // genera los numeros de minas adyacentes y los añade a matrizvalores.numrev
+    public static void generarNumAdy() { // genera los numeros de minas adyacentes y los añade a matrizvalores.numrev
         for (int i=0; i<=7; i++) { 
             for (int j=0; j<=7; j++) { // indices para recorrer la matriz
                 int contador = 0; 
@@ -222,7 +222,7 @@ public class Cuadricula{
      * @param i fila del espacio que se quiere revelar sus adyacentes
      * @param j columna del espacio que se quiere revelar sus adyacentes
      */
-    static void revelarAdy(int i, int j) {
+    public static void revelarAdy(int i, int j) {
         if (esPosValida(i-1, j-1)) { // se revisa que los indices no se salgan del array
             matrizboton[i-1][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
             matrizvalores[i-1][j-1].revelado = true; // se refleja la revelacion en la matriz
@@ -292,7 +292,7 @@ public class Cuadricula{
      * @param i fila donde se encuentra el espacio 
      * @param j columna donde se encuentra el espacio
      */
-    static void revelarCerosAdy(int i, int j) { // revela los espacios con 0 cantidad de minas adyacentes, adyacentes al espacio que se selecciona
+    public static void revelarCerosAdy(int i, int j) { // revela los espacios con 0 cantidad de minas adyacentes, adyacentes al espacio que se selecciona
         Cuadricula.revelarAdy(i, j); // se revelan los espacios inmediatamente adyacente
         int posoriginali = i; // se guarda la posicion original de i
         int posoriginalj = j; // se guarda la posicion original de j
@@ -367,7 +367,7 @@ public class Cuadricula{
      * @param i fila donde se encuentra el espacio 
      * @param j columna donde se encuentra el espacio 
      */
-    static void revelarCeros(int i, int j) { // repite el ciclo de revelar ceros adyacentes en toda la columna
+    public static void revelarCeros(int i, int j) { // repite el ciclo de revelar ceros adyacentes en toda la columna
         Cuadricula.revelarCerosAdy(i, j);
         int posoriginali = i; // se guarda la posicion original de i
         int posoriginalj = j; // se guarda la posicion original de j
@@ -440,7 +440,7 @@ public class Cuadricula{
      * @param j columna del espacio al que se le quiere cambiar el color 
      * @param numrandom numero aleatorio del 0 al 7
      */
-    static void colorAleatorio(int i, int j, int numrandom) { // genera un color aleatorio para los botones de la matriz
+    public static void colorAleatorio(int i, int j, int numrandom) { // genera un color aleatorio para los botones de la matriz
         if (numrandom == 0) { // si el numero aleatorio es 0
             matrizboton[i][j].setStyle("-fx-background-color: #0093ff;-fx-border-color: #272323;"); // se cambia el color del boton 
         }
@@ -473,7 +473,7 @@ public class Cuadricula{
      * de la matriz de valores al 
      * momento de llamar el metodo. 
      */
-    static void checkVictoria() {
+    public static void checkVictoria() {
         int cantrevelados = 0; // cantidad de espacios que se han revelado 
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) {
@@ -502,7 +502,7 @@ public class Cuadricula{
      * botones se les asigna el color gris para simbolizar
      * que se han revelado. 
      */
-    static void updateCuadricula() {
+    public static void updateCuadricula() {
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) {
                 if (matrizvalores[i][j].revelado == true) { // si el espacio ya esta revelado 
@@ -523,7 +523,7 @@ public class Cuadricula{
      * @param j columna en la que se encuentra el espacio
      * @return cantidad de minas adyacentes a un espacio, tomando en cuenta los espacios que se han revelado
      */
-    static int cantMinasAdy(int i, int j) {
+    public static int cantMinasAdy(int i, int j) {
         int cantminas = 0; // contador de cantidad de minas adyacentes
         if (esPosValida(i, j+1)) { // se revisa que los indices no se salgan del array
             if (Computadora.listaminas.contains(i, j+1)) { // si el espacio esta en la lista de minas
@@ -576,7 +576,7 @@ public class Cuadricula{
      * @param j columna en la que se encuentra el espacio 
      * @return cantidad de espacios inmediatamente adyacentes revelados 
      */
-    static int cantidadReveladosAdy(int i, int j) {
+    public static int cantidadReveladosAdy(int i, int j) {
         int cantrevelados = 0; // contador de cantidad de espacios adyacentes revelados 
         if (esPosValida(i, j+1)) { // se revisa que los indices no se salgan del array
             if (matrizvalores[i][j+1].revelado == true) { // si el espacio ya esta revelado 
@@ -627,7 +627,7 @@ public class Cuadricula{
      * Obtiene todos los valores de la lista
      * segura y se les hace push a la pila. 
      */
-    static void generarStackSugerencias() {
+    public static void generarStackSugerencias() {
         Computadora.generarListaMinas(); // se genera la lista de minas 
         Computadora.generarListaGeneral(); // se genera la lista general 
         Computadora.generarListasSegIncert(); // se generan las listas segura e incertidumbre 
@@ -644,7 +644,7 @@ public class Cuadricula{
      * Vacia una pila 
      * @param stack una pila
      */
-    static void emptyStack(Stack stack) {
+    public static void emptyStack(Stack stack) {
         while (stack.size() > 0) { // mientas que el tamaño sea mayor a 0
             stack.pop(); // se le hace pop a la pila 
         }
@@ -656,7 +656,7 @@ public class Cuadricula{
      * @param lista una lista enlazada de arrays de tamaño 2
      * @param nombrelista nombre de la lista 
      */
-    static void printLista(ListaEnlazada lista, String nombrelista) {
+    public static void printLista(ListaEnlazada lista, String nombrelista) {
         int counter = 0; // contador 
         System.out.print("Contenido de " + nombrelista + " ");
         while (counter < lista.size()) { // mientras que el contador sea menor al tamaño de la lista

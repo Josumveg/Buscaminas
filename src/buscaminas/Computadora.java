@@ -22,7 +22,7 @@ public class Computadora extends main{
      * Metodo dummy que elige un
      * espacio aleatorio para jugar. 
      */
-    static void dummy() {
+    public static void dummy() {
         if (turno == true) { // si es el turno del dummy 
             int randi = r.nextInt(8);; // genera un indice i aleatorio 
             int randj = r.nextInt(8);; // genera un indice j aleatorio 
@@ -42,7 +42,7 @@ public class Computadora extends main{
      * para su eleccion. Se imprimen cada una de las
      * listas cada vez que se llama el metodo. 
      */
-    static void avanzado() {
+    public static void avanzado() {
         if (turno == true) { // si es el turno del avanzado 
             generarListaMinas(); // se genera la lista de minas 
             generarListaGeneral(); // se genera la lista general 
@@ -51,12 +51,6 @@ public class Computadora extends main{
             generarListasSegIncert(); // se generan las listas segura e incertidumbre 
             updateLista(listasegura); // se actualiza la lista segura 
             updateLista(listaincertidumbre); // se actualuza la lista incertidumbre 
-            Cuadricula.printLista(listasegura, "lista segura"); // se imprime la lista segura 
-            System.out.println(" ");
-            Cuadricula.printLista(listaincertidumbre, "lista incertidumbre"); // se imprime la lista incertidumbre 
-            System.out.println(" ");
-            Cuadricula.printLista(listageneral, "lista general"); // se imprime la lista general 
-            System.out.println(" ");
             if (listasegura.isEmpty()) { // si la lista segura esta vacia 
                 elegirEspacioAvanzado(listaincertidumbre.getFirst()[0], listaincertidumbre.getFirst()[1]); // se elige el espacio que esta primero en la lista incertidumbre 
                 listaincertidumbre.deleteFirstNotReturn(); // se borra el espacio que se acaba de elegir 
@@ -76,7 +70,7 @@ public class Computadora extends main{
      * @param i fila en la que se encuentra el espacio 
      * @param j columna en la que se encuentra el espacio 
      */
-    static void addAdyNoRevelados(int i, int j) {
+    public static void addAdyNoRevelados(int i, int j) {
         if (Cuadricula.esPosValida(i, j+1)) { // se revisa que los indices no se salgan del array
             if (Cuadricula.matrizvalores[i][j+1].revelado == false) { // si el espacio no esta revelado
                 if (listaminas.contains(i, j+1) == false) { // si el espacio no se encuentra ya en la lista de minas
@@ -142,7 +136,7 @@ public class Computadora extends main{
      * @param i fila en la que se encuentra el espacio 
      * @param j columna en la que se encuentra el espacio 
      */
-    static void addEspacioSeguro(int i, int j) {
+    public static void addEspacioSeguro(int i, int j) {
         if (Cuadricula.esPosValida(i, j+1)) { // se revisa que los indices no se salgan del array
             if (Cuadricula.matrizvalores[i][j+1].revelado == true) { // si el espacio de la derecha esta revelado 
                 if (Cuadricula.matrizvalores[i][j+1].numrev > 0) { // si el espacio la cantidad de minas adyacentes del espacio de la derecha es mayor a 0
@@ -254,7 +248,7 @@ public class Computadora extends main{
      * los espacios que ya se hayan revelado. 
      * @param lista una lista enlazada de arrays 
      */
-    static void updateLista(ListaEnlazada lista) { // se actualiza la lista para quitar los espacios que ya se han revelado
+    public static void updateLista(ListaEnlazada lista) { // se actualiza la lista para quitar los espacios que ya se han revelado
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) {
                 if (Cuadricula.matrizvalores[i][j].revelado == true && lista.contains(i, j)) { // si el espacio ya esta revelado y se encuentra en la lista
@@ -297,10 +291,12 @@ public class Computadora extends main{
      * borra de la lista general. Esto se 
      * repite hasta que la lista general se vacia. 
      */
-    static void generarListasSegIncert() {
+    public static void generarListasSegIncert() {
         Random r = new Random(); // se genera un objeto random 
         int numrandom; // se declara la variable para un numero random 
         while (listageneral.isEmpty() == false) { // si la lista general no esta vacia 
+            Cuadricula.printLista(listageneral, "lista general"); // se imprime la lista general 
+            System.out.println(" ");
             numrandom = r.nextInt(listageneral.size()); // genera un numero random del tamaño de la lista general para funcionar como indice
             addEspacioSeguro(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]); // se añaden los numeros del indice correspondiente a la lista segura
             if (listasegura.contains(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]) == false) { // si el espacio no se encuentra en la lista segura 
@@ -308,7 +304,13 @@ public class Computadora extends main{
                     listaincertidumbre.insertFirst(new int[] {listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]}); // si no se agregan a la lista segura, se agregan a la incertidumbre
                 }
             }
+            Cuadricula.printLista(listasegura, "lista segura"); // se imprime la lista segura 
+            System.out.println(" ");
+            Cuadricula.printLista(listaincertidumbre, "lista incertidumbre"); // se imprime la lista incertidumbre 
+            System.out.println(" ");
             listageneral.deleteIndex(numrandom); // borra el numero elegido de la lista general
+            Cuadricula.printLista(listageneral, "lista general"); // se imprime la lista general 
+            System.out.println(" ");
         }
     }
     
@@ -319,7 +321,7 @@ public class Computadora extends main{
      * Es decir, los espacios que no se
      * hayan revelado. 
      */
-    static void generarListaGeneral() {
+    public static void generarListaGeneral() {
         for (int i=0; i<=7; i++) {
             for (int j=0; j<=7; j++) {
                 if (Cuadricula.matrizvalores[i][j].revelado == false) { // si el espacio no se ha revelado 
