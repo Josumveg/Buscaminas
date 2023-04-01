@@ -1,5 +1,6 @@
 package buscaminas;
 
+import java.io.IOException;
 import java.util.Random;
 import javafx.application.Application;
 import javafx.scene.Scene;
@@ -11,6 +12,8 @@ import javafx.scene.control.Label;
 import javafx.geometry.Pos;
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 
 /**
@@ -39,7 +42,7 @@ public class main extends Application{
      */
     
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) throws Exception{
         /**
          * Se determina el titulo de la ventana
          */
@@ -200,6 +203,24 @@ public class main extends Application{
         };
         timer.scheduleAtFixedRate(task, 0, 1000l); //hace que se corra el metodo run cada segundo sin delay
         
+        // Boton para iniciar control arduino
+        Button botoniniciarcontroller = new Button();
+        botoniniciarcontroller.setText("Iniciar control");
+        botoniniciarcontroller.setTranslateX(-150);
+        botoniniciarcontroller.setTranslateY(-275);
+        botoniniciarcontroller.setOnAction(e -> {
+            
+            new Thread(() -> {
+                try {
+                    Controller.startController();
+                }
+                catch (IOException | InterruptedException ioexception) {
+                    System.out.println("Error conectando controller");
+                }
+            }).start();
+            
+        });
+        
         // Boton para hacer restart
         /**
          * El boton reset tiene una doble funcionalidad
@@ -241,6 +262,7 @@ public class main extends Application{
              * Al presionar el boton se cancela
              * el timer y se cierra la ventana
              */
+            Controller.controllerFuncionando = false;
             timer.cancel();
             primaryStage.close();
             
@@ -469,6 +491,16 @@ public class main extends Application{
                                         Cuadricula.matrizvalores[fila][col].bandera = 1; // se cambia el valor en la matriz para saber que hay una bandera
                                         Cuadricula.cantbanderas++; // aumenta la cantidad de banderas 
                                         Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notifica al usuario la cantidad de banderas que hay
+                                        if (Controller.controllerFuncionando == true) {
+                                            try {
+                                                Controller.RedLED.setValue(1);
+                                                Thread.sleep(100);
+                                                Controller.RedLED.setValue(0);
+                                            }
+                                            catch (IOException | InterruptedException ioexception) {
+                                                System.out.println("Error conectando a controller");
+                                            }
+                                        }
                                     }
                                     else { // si el espacio ya tiene una bandera
                                         Cuadricula.matrizboton[fila][col].setText(""); // se cambia el texto para simbolizar que ya no hay bandera 
@@ -568,6 +600,16 @@ public class main extends Application{
                                         Cuadricula.matrizvalores[fila][col].bandera = 1; // se cambia el valor en la matriz para saber que hay una bandera
                                         Cuadricula.cantbanderas++; // aumenta la cantidad de banderas 
                                         Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notifica al usuario la cantidad de banderas que hay
+                                        if (Controller.controllerFuncionando == true) {
+                                            try {
+                                                Controller.RedLED.setValue(1);
+                                                Thread.sleep(100);
+                                                Controller.RedLED.setValue(0);
+                                            }
+                                            catch (IOException | InterruptedException ioexception) {
+                                                System.out.println("Error conectando a controller");
+                                            }
+                                        }
                                     }
                                     else { // si el espacio ya tiene una bandera
                                         Cuadricula.matrizboton[fila][col].setText(""); // se cambia el texto para simbolizar que ya no hay bandera 
@@ -601,7 +643,8 @@ public class main extends Application{
          */
         layout.getChildren().addAll(labelminasencontradas, Cuadricula.labelcantminasencontradas, 
         labeltiempo, labelcanttiempo, Cuadricula.botonreset, botonexit, labelelegirmodo,
-        botondummy, botonavanzado, botonsugerencia, labelerror, Cuadricula.labelcantsugerencias);
+        botondummy, botonavanzado, botonsugerencia, labelerror, Cuadricula.labelcantsugerencias
+        , botoniniciarcontroller);
         
     }
     
@@ -634,6 +677,7 @@ public class main extends Application{
         Cuadricula.emptyStack(Cuadricula.stacksugerencia); // se vacia la pila de sugerencias 
         Cuadricula.stacksugerencia.resetSize(); // el tamaño de la pila vuelve a 0
         Cuadricula.labelcantsugerencias.setText("0"); // se notifica al usuario la cantidad de sugerencias habilitadas
+        Controller.resetSizes();
         Random r = new Random(); // se crea un objeto random 
         int numrandom = r.nextInt(8); // se genera un numero random del 0 al 7 para elegir un color aleatorio 
         for (int i=0; i<=7; i++) {
@@ -748,6 +792,55 @@ public class main extends Application{
                 Cuadricula.matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #DA0000;-fx-border-width: 3"); // se cambia el color del borde en el color que representa al avanzado 
                 ajustarMinasEncontradas(); // se ajustan la cantidad de minas encontradas 
                 Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notidica al usuario de la cantidad de minas encontradas 
+            }
+        }
+        else {
+            Cuadricula.botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
+        }
+    }
+    
+    public static void elegirEspacioController(int i, int j) {
+        Cuadricula.checkVictoria(); // se llama al metodo para verificar si se ha ganado 
+        if (Cuadricula.victoria == false) { // se verifica si se ha ganado 
+            if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) { // si el espacio elegido es una mina 
+                Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el avanzado 
+                Cuadricula.revelarMinas(); // se revelan las minas del color que representa el avanzado 
+                Cuadricula.gameover = true; // se acaba el juego 
+                Cuadricula.botonreset.setText(":("); // se cambia el texto del boton reset para representar la perdida 
+                Controller.resetSizes();
+            }
+            else if (Cuadricula.matrizvalores[i][j].numrev == 0){ // si el espacio elegido es 0 
+                Cuadricula.revelarCeros(i, j); // se revelan los ceros adyacentes 
+                ajustarMinasEncontradas(); // se ajusta la cantidad de minas encontradas 
+                Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notifica al usuario de la cantidad de minas encontradas
+                Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el control
+                if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
+                    Computadora.turno = true; // se le da el turno a la computadora
+                    Computadora.dummy(); // se llama al metodo dummy para que elija un espacio
+                }
+                else if (Computadora.avanzadofuncionando == true) { // se fija si se esta jugando contra el avanzado
+                    Computadora.turno = true; // se le da el turno a la computadora
+                    Computadora.avanzado(); // se llama al metodo avanzado para que elija un espacio
+                }
+            }
+            else {
+                Cuadricula.matrizvalores[i][j].revelado = true; // se cambia el valor en la matriz de valores a revelado 
+                Cuadricula.matrizboton[i][j].setText(Integer.toString(Cuadricula.matrizvalores[i][j].numrev)); // se le pone al boton la cantidad de minas adyacentes
+                Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el control
+                ajustarMinasEncontradas(); // se ajustan la cantidad de minas encontradas 
+                Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notidica al usuario de la cantidad de minas encontradas 
+                if (Computadora.dummyfuncionando == true){ // se fija si se esta jugando contra el dummy
+                    Computadora.turno = true; // se le da el turno a la computadora
+                    Computadora.dummy(); // se llama al metodo dummy para que elija un espacio
+                }
+                else if (Computadora.avanzadofuncionando == true) { // se fija si se esta jugando contra el avanzado
+                    Computadora.turno = true; // se le da el turno a la computadora
+                    Computadora.avanzado(); // se llama al metodo avanzado para que elija un espacio
+                }
+            }
+            Cuadricula.checkVictoria(); // se checkea si se ha ganado
+            if (Cuadricula.victoria == true) { // si se ha ganado
+                Cuadricula.botonreset.setText(":)"); // se cambia el boton a una cara feliz para sombolizar victoria
             }
         }
         else {
