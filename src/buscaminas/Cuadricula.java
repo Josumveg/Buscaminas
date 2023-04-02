@@ -630,7 +630,7 @@ public class Cuadricula{
     public static void generarStackSugerencias() {
         Computadora.generarListaMinas(); // se genera la lista de minas 
         Computadora.generarListaGeneral(); // se genera la lista general 
-        Computadora.generarListasSegIncert(); // se generan las listas segura e incertidumbre 
+        Computadora.generarListasSegIncertNoPrint(); // se generan las listas segura e incertidumbre 
         if (Computadora.listasegura.isEmpty() == false) { // si la lista segura esta vacia no se hace nada 
             stacksugerencia.push(Computadora.listasegura.getFirst()); // se le hace push al valor de la lista segura con el indice del contador
         }

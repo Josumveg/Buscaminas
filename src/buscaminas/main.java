@@ -12,8 +12,6 @@ import javafx.scene.control.Label;
 import javafx.geometry.Pos;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javafx.application.Platform;
 
 /**
@@ -351,7 +349,6 @@ public class main extends Application{
              */
             if (Cuadricula.gameover == false) { // si el juego no se ha acabado
                 if (Cuadricula.cantsugerencias > 0) { // si el jugador tiene sugerencias habilitadas
-                    Cuadricula.generarStackSugerencias(); // se crea la pila de sugerencias
                     if (Cuadricula.stacksugerencia.size() > 0) { // si la pila no esta vacia
                         try { // se necesita un try catch, porque al hacer peek da la pila vacia da error
                             while(Cuadricula.matrizvalores[Cuadricula.stacksugerencia.peek()[0]][Cuadricula.stacksugerencia.peek()[1]].revelado == true) {
@@ -445,6 +442,7 @@ public class main extends Application{
                                         if (Cuadricula.cantturnos % 5 == 0) { // cada cinco turnos
                                             Cuadricula.cantsugerencias++; // se habilita una nueva sugerencia 
                                             Cuadricula.labelcantsugerencias.setText(Integer.toString(Cuadricula.cantsugerencias)); // se notifica al usuario la cantidad de sugerencias que le quedan
+                                            Cuadricula.generarStackSugerencias(); // se crea la pila de sugerencias
                                         }
                                         if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) { // si el espacio es una mina 
                                             Cuadricula.revelarMinas(); // se llama al metodo revelarMinas para revelar las minas 
@@ -553,7 +551,8 @@ public class main extends Application{
                                         Cuadricula.cantturnos++; // se añade un turno a la cantidad de turnos 
                                         if (Cuadricula.cantturnos % 5 == 0) { // cada cinco turnos
                                             Cuadricula.cantsugerencias++; // se habilita una nueva sugerencia 
-                                            Cuadricula.labelcantsugerencias.setText(Integer.toString(Cuadricula.cantsugerencias)); // se notifica al usuario la cantidad de sugerencias que le quedan
+                                            Cuadricula.labelcantsugerencias.setText(Integer.toString(Cuadricula.cantsugerencias)); // se notifica al usuario la cantidad de sugerencias que le quedan\
+                                            Cuadricula.generarStackSugerencias(); // se crea la pila de sugerencias
                                         }
                                         if (Cuadricula.esMina(Cuadricula.matrizvalores[fila][col].mina)) { // si el espacio es una mina 
                                             Cuadricula.revelarMinas(); // se llama al metodo revelarMinas para revelar las minas 

@@ -22,8 +22,10 @@ public class Controller {
     static final int ButtonUp = 6;
     
     static final int LED = 7;
+    //static final int Buzzer = 8;
     
     static Pin RedLED;
+    //static Pin activeBuzzer;
     
     public static void startController() throws IOException, InterruptedException {
         IODevice arduino = new FirmataDevice(USBPORT);
@@ -43,6 +45,9 @@ public class Controller {
             
             RedLED = arduino.getPin(LED);
             RedLED.setMode(Pin.Mode.OUTPUT);
+            
+            //activeBuzzer = arduino.getPin(Buzzer);
+            //activeBuzzer.setMode(Pin.Mode.OUTPUT);
             
             Pin buttonSel = arduino.getPin(ButtonSel);
             buttonSel.setMode(Pin.Mode.INPUT);
@@ -66,7 +71,7 @@ public class Controller {
                         resetSizes();
                         controlj++;
                         Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(250);
+                        Thread.sleep(200);
                     }
                 }
                 if (buttonLeft.getValue() != 0) {
@@ -74,7 +79,7 @@ public class Controller {
                         resetSizes();
                         controlj--;
                         Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(250);
+                        Thread.sleep(200);
                     }
                 }
                 if (buttonUp.getValue() != 0) {
@@ -82,7 +87,7 @@ public class Controller {
                         resetSizes();
                         controli--;
                         Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(250);
+                        Thread.sleep(200);
                     }
                 }
                 if (buttonDown.getValue() != 0) {
@@ -90,7 +95,7 @@ public class Controller {
                         resetSizes();
                         controli++;
                         Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(250);
+                        Thread.sleep(200);
                     }
                 }
                 if (buttonSel.getValue() != 0) {

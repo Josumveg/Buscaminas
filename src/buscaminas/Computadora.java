@@ -314,6 +314,21 @@ public class Computadora extends main{
         }
     }
     
+    public static void generarListasSegIncertNoPrint() {
+        Random r = new Random(); // se genera un objeto random 
+        int numrandom; // se declara la variable para un numero random 
+        while (listageneral.isEmpty() == false) { // si la lista general no esta vacia 
+            numrandom = r.nextInt(listageneral.size()); // genera un numero random del tamaño de la lista general para funcionar como indice
+            addEspacioSeguro(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]); // se añaden los numeros del indice correspondiente a la lista segura
+            if (listasegura.contains(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]) == false) { // si el espacio no se encuentra en la lista segura 
+                if (listaincertidumbre.contains(listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]) == false) { // si el espacio no se encuentra ya en la lista incertidumbre
+                    listaincertidumbre.insertFirst(new int[] {listageneral.get(numrandom)[0], listageneral.get(numrandom)[1]}); // si no se agregan a la lista segura, se agregan a la incertidumbre
+                }
+            }
+            listageneral.deleteIndex(numrandom); // borra el numero elegido de la lista general
+        }
+    }
+    
     /**
      * Se genera la lista general. 
      * Se le agragan todos los 
