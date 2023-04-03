@@ -489,14 +489,14 @@ public class main extends Application{
                                         Cuadricula.matrizvalores[fila][col].bandera = 1; // se cambia el valor en la matriz para saber que hay una bandera
                                         Cuadricula.cantbanderas++; // aumenta la cantidad de banderas 
                                         Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notifica al usuario la cantidad de banderas que hay
-                                        if (Controller.controllerFuncionando == true) {
+                                        if (Controller.controllerFuncionando == true) { // si el control esta funcionando
                                             try {
-                                                Controller.RedLED.setValue(1);
-                                                Thread.sleep(100);
-                                                Controller.RedLED.setValue(0);
+                                                Controller.RedLED.setValue(1); // se enciende el LED en la protoboard 
+                                                Thread.sleep(100); // // se espera 100 milisegundos
+                                                Controller.RedLED.setValue(0); // se apaga el LED en la protoboard 
                                             }
-                                            catch (IOException | InterruptedException ioexception) {
-                                                System.out.println("Error conectando a controller");
+                                            catch (IOException | InterruptedException ioexception) { // catch en caso de que haya un error enviando la señal al arduino
+                                                System.out.println("Error conectando a controller"); 
                                             }
                                         }
                                     }
@@ -599,13 +599,13 @@ public class main extends Application{
                                         Cuadricula.matrizvalores[fila][col].bandera = 1; // se cambia el valor en la matriz para saber que hay una bandera
                                         Cuadricula.cantbanderas++; // aumenta la cantidad de banderas 
                                         Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notifica al usuario la cantidad de banderas que hay
-                                        if (Controller.controllerFuncionando == true) {
+                                        if (Controller.controllerFuncionando == true) { // si el control esta funcionando 
                                             try {
-                                                Controller.RedLED.setValue(1);
-                                                Thread.sleep(100);
-                                                Controller.RedLED.setValue(0);
+                                                Controller.RedLED.setValue(1); // se enciende el LED en la protoboard 
+                                                Thread.sleep(100); // se espera 100 milisegundos 
+                                                Controller.RedLED.setValue(0); // se apaga el LED en la protoboard 
                                             }
-                                            catch (IOException | InterruptedException ioexception) {
+                                            catch (IOException | InterruptedException ioexception) { // catch en caso de que haya un error enviando señal a arduino
                                                 System.out.println("Error conectando a controller");
                                             }
                                         }
@@ -717,10 +717,11 @@ public class main extends Application{
     }
     
     /**
-     * Se verifica que el espacio no se haya revelado ya ni tenga una bandera.  
-     * Si el espacio presionado es una mina se revelan las minas y se 
+     * Método para elegir un espacio en la cuadricula y revelarlo, 
+     * usado especificamente para la computadora dummy. 
+     * Si el espacio seleccionado es una mina se revelan las minas y se 
      * acaba el juego. Si el espacio seleccionado es un cero, se revelan
-     * todos los ceros adyacentes. Si el espacio presionado es un numero
+     * todos los ceros adyacentes. Si el espacio seleccionadp es un numero
      * diferente a cero, se revela solo ese espacio. Si alguno de los 
      * Por ultimo se verifica si se ha ganado. Al ganar se revelan las
      * minas de color verde.
@@ -757,10 +758,11 @@ public class main extends Application{
     }
     
     /**
-     * Se verifica que el espacio no se haya revelado ya ni tenga una bandera.  
-     * Si el espacio presionado es una mina se revelan las minas y se 
+     * Método para elegir un espacio en la cuadricula y revelarlo, 
+     * usado especificamente para la computadora avanzada. 
+     * Si el espacio seleccionado es una mina se revelan las minas y se 
      * acaba el juego. Si el espacio seleccionado es un cero, se revelan
-     * todos los ceros adyacentes. Si el espacio presionado es un numero
+     * todos los ceros adyacentes. Si el espacio seleccionadp es un numero
      * diferente a cero, se revela solo ese espacio. Si alguno de los 
      * Por ultimo se verifica si se ha ganado. Al ganar se revelan las
      * minas de color verde.
@@ -798,6 +800,18 @@ public class main extends Application{
         }
     }
     
+    /**
+     * Método para elegir un espacio en la cuadricula y revelarlo, 
+     * usado especificamente para el control con arduino. 
+     * Si el espacio seleccionado es una mina se revelan las minas y se 
+     * acaba el juego. Si el espacio seleccionado es un cero, se revelan
+     * todos los ceros adyacentes. Si el espacio seleccionadp es un numero
+     * diferente a cero, se revela solo ese espacio. Si alguno de los 
+     * Por ultimo se verifica si se ha ganado. Al ganar se revelan las
+     * minas de color verde.
+     * @param i fila del espacio que se va a revelar 
+     * @param j columna del espacio que se va a revelar
+     */
     public static void elegirEspacioController(int i, int j) {
         Cuadricula.checkVictoria(); // se llama al metodo para verificar si se ha ganado 
         if (Cuadricula.victoria == false) { // se verifica si se ha ganado 
