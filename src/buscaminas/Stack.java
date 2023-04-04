@@ -1,11 +1,11 @@
 package buscaminas;
 
 /**
- * @author Jose Pablo Umaña Vega
  * Clase para la creacion de pilas
  * utilizando listas enlazadas. Esta
  * es especificamente una pila de listas
  * enlazadas de arreglos. 
+ * @author Jose Pablo Umaña Vega
  */
 public class Stack {
     private ListaEnlazada stacklist = new ListaEnlazada();

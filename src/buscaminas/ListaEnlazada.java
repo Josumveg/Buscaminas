@@ -1,9 +1,9 @@
 package buscaminas;
 
 /**
- * @author Jose Pablo Umaña Vega
  * Clase para crear listas enlazadas
  * especificamente de arrays. 
+ * @author Jose Pablo Umaña Vega
  */
 public class ListaEnlazada {
     

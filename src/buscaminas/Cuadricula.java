@@ -5,10 +5,10 @@ import javafx.scene.control.Label;
 import java.util.Random;
 
 /**
- * @author Jose Pablo Umaña Vega
  * Clase cuadricula que contiene valores de la cuadricula. 
  * Se tienen métodos que realizan cambios a dichos
  * valores lo cual hace que cambie la cuadricula del juego. 
+ * @author Jose Pablo Umaña Vega
  */
 public class Cuadricula{
     

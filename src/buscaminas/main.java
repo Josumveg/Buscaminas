@@ -15,6 +15,7 @@ import java.util.TimerTask;
 import javafx.application.Platform;
 
 /**
+ * Clase principal que genera ventana de juego
  * @author Jose Pablo Umaña Vega
  * @version 19.0.2
  */

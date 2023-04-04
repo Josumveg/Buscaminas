@@ -2,11 +2,11 @@ package buscaminas;
 import java.util.Random;
 
 /**
- * @author Jose Pablo Umaña Vega
  * Clase computadora con herencia de la clase main. 
  * Se tienen los valores y metodos que permiten
  * la funcionalidad de dos modos de juego. Jugar contra
  * el dummy y el avanzado. 
+ * @author Jose Pablo Umaña Vega
  */
 public class Computadora extends main{
     static boolean turno = false; // variable que determina si es el turno de la computadora
