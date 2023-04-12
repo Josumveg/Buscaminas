@@ -186,7 +186,7 @@ public class ListaEnlazada {
     /**
      * Se imprime en consola los 
      * valores del array de una lista
-     * en lazada de arrays. 
+     * enlazada de arrays. 
      */
     public void recorrerLista() {
         Node current = this.head;

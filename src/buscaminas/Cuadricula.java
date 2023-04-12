@@ -224,10 +224,12 @@ public class Cuadricula{
      */
     public static void revelarAdy(int i, int j) {
         if (esPosValida(i-1, j-1)) { // se revisa que los indices no se salgan del array
-            matrizboton[i-1][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
-            matrizvalores[i-1][j-1].revelado = true; // se refleja la revelacion en la matriz
-            if (matrizvalores[i-1][j-1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
-                matrizboton[i-1][j-1].setText(Integer.toString(matrizvalores[i-1][j-1].numrev)); // se asigna el texto al boton de la cantidad de minas adyacentes
+            if (matrizvalores[i-1][j-1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero 
+                matrizboton[i-1][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+                matrizvalores[i-1][j-1].revelado = true; // se refleja la revelacion en la matriz
+                if (matrizvalores[i-1][j-1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
+                    matrizboton[i-1][j-1].setText(Integer.toString(matrizvalores[i-1][j-1].numrev)); // se asigna el texto al boton de la cantidad de minas adyacentes
+                }
             }
         }
         if (esPosValida(i-1, j)) { // se revisa que los indices no se salgan del array
@@ -238,10 +240,12 @@ public class Cuadricula{
             }
         }
         if (esPosValida(i-1, j+1)) { // se revisa que los indices no se salgan del array
-            matrizboton[i-1][j+1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
-            matrizvalores[i-1][j+1].revelado = true; // se refleja la revelacion en la matriz
             if (matrizvalores[i-1][j+1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
-                matrizboton[i-1][j+1].setText(Integer.toString(matrizvalores[i-1][j+1].numrev));  // se asigna el texto al boton de la cantidad de minas adyacentes
+                matrizboton[i-1][j+1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+                matrizvalores[i-1][j+1].revelado = true; // se refleja la revelacion en la matriz
+                if (matrizvalores[i-1][j+1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
+                    matrizboton[i-1][j+1].setText(Integer.toString(matrizvalores[i-1][j+1].numrev));  // se asigna el texto al boton de la cantidad de minas adyacentes
+                }
             }
         }
         if (esPosValida(i, j-1)) { // se revisa que los indices no se salgan del array
@@ -259,10 +263,12 @@ public class Cuadricula{
             }
         }
         if (esPosValida(i+1, j-1)) { // se revisa que los indices no se salgan del array
-            matrizboton[i+1][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
-            matrizvalores[i+1][j-1].revelado = true; // se refleja la revelacion en la matriz
             if (matrizvalores[i+1][j-1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
-                matrizboton[i+1][j-1].setText(Integer.toString(matrizvalores[i+1][j-1].numrev));  // se asigna el texto al boton de la cantidad de minas adyacentes
+                matrizboton[i+1][j-1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+                matrizvalores[i+1][j-1].revelado = true; // se refleja la revelacion en la matriz
+                if (matrizvalores[i+1][j-1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
+                    matrizboton[i+1][j-1].setText(Integer.toString(matrizvalores[i+1][j-1].numrev));  // se asigna el texto al boton de la cantidad de minas adyacentes
+                }
             }
         }
         if (esPosValida(i+1, j)) { // se revisa que los indices no se salgan del array
@@ -273,10 +279,12 @@ public class Cuadricula{
             }
         }
         if (esPosValida(i+1, j+1)) { // se revisa que los indices no se salgan del array
-            matrizboton[i+1][j+1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
-            matrizvalores[i+1][j+1].revelado = true; // se refleja la revelacion en la matriz
             if (matrizvalores[i+1][j+1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
-                matrizboton[i+1][j+1].setText(Integer.toString(matrizvalores[i+1][j+1].numrev));  // se asigna el texto al boton de la cantidad de minas adyacentes
+                matrizboton[i+1][j+1].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
+                matrizvalores[i+1][j+1].revelado = true; // se refleja la revelacion en la matriz
+                if (matrizvalores[i+1][j+1].numrev > 0) { // si el numero de cantidad de minas adyacentes es mayor a cero
+                    matrizboton[i+1][j+1].setText(Integer.toString(matrizvalores[i+1][j+1].numrev));  // se asigna el texto al boton de la cantidad de minas adyacentes
+                }
             }
         }
         matrizboton[i][j].setStyle("-fx-background-color: #DADAD7;-fx-border-color: #C2C2C2;"); // se cambian los colores del boton para simbolizar que se revela
