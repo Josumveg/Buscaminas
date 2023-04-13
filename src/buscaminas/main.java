@@ -133,7 +133,7 @@ public class main extends Application{
         labelerror.setText("");
         labelerror.setStyle("-fx-background-color: #FF0000;-fx-text-fill: white;");
         labelerror.setTranslateX(0);
-        labelerror.setTranslateY(-275);
+        labelerror.setTranslateY(-300);
         
         /**
          * El label de cantidad de sugerencias
@@ -812,8 +812,10 @@ public class main extends Application{
      * minas de color verde.
      * @param i fila del espacio que se va a revelar 
      * @param j columna del espacio que se va a revelar
+     * @throws IOException
+     * @throws InterruptedException
      */
-    public static void elegirEspacioController(int i, int j) {
+    public static void elegirEspacioController(int i, int j) throws IOException, InterruptedException{
         Cuadricula.checkVictoria(); // se llama al metodo para verificar si se ha ganado 
         if (Cuadricula.victoria == false) { // se verifica si se ha ganado 
             if (Cuadricula.esMina(Cuadricula.matrizvalores[i][j].mina)) { // si el espacio elegido es una mina 
@@ -821,9 +823,24 @@ public class main extends Application{
                 Cuadricula.revelarMinas(); // se revelan las minas del color que representa el avanzado 
                 Cuadricula.gameover = true; // se acaba el juego 
                 Cuadricula.botonreset.setText(":("); // se cambia el texto del boton reset para representar la perdida 
+                Controller.passiveBuzzer.setValue(1);
+                Thread.sleep(100);
+                Controller.passiveBuzzer.setValue(0);
+                Thread.sleep(100);
+                Controller.passiveBuzzer.setValue(1);
+                Thread.sleep(100);
+                Controller.passiveBuzzer.setValue(0);
+                Thread.sleep(100);
+                Controller.passiveBuzzer.setValue(1);
+                Thread.sleep(100);
+                Controller.passiveBuzzer.setValue(0);
+                Thread.sleep(100);
                 Controller.resetSizes();
             }
             else if (Cuadricula.matrizvalores[i][j].numrev == 0){ // si el espacio elegido es 0 
+                Controller.passiveBuzzer.setValue(1);
+                Thread.sleep(100);
+                Controller.passiveBuzzer.setValue(0);
                 Cuadricula.revelarCeros(i, j); // se revelan los ceros adyacentes 
                 ajustarMinasEncontradas(); // se ajusta la cantidad de minas encontradas 
                 Cuadricula.labelcantminasencontradas.setText(Integer.toString(Cuadricula.cantbanderas)); // se notifica al usuario de la cantidad de minas encontradas
@@ -838,6 +855,9 @@ public class main extends Application{
                 }
             }
             else {
+                Controller.passiveBuzzer.setValue(1);
+                Thread.sleep(100);
+                Controller.passiveBuzzer.setValue(0);
                 Cuadricula.matrizvalores[i][j].revelado = true; // se cambia el valor en la matriz de valores a revelado 
                 Cuadricula.matrizboton[i][j].setText(Integer.toString(Cuadricula.matrizvalores[i][j].numrev)); // se le pone al boton la cantidad de minas adyacentes
                 Cuadricula.updateCuadricula(); // se actualiza la cuadricula para quitar el marcador de donde eligió el control

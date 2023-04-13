@@ -4,6 +4,8 @@ import org.firmata4j.firmata.*;
 import org.firmata4j.IODevice;
 import org.firmata4j.Pin;
 import java.io.IOException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Platform;
 
 /**
@@ -20,17 +22,17 @@ public class Controller {
     
     static final String USBPORT = "COM4"; // puerto USB en el que se conecta el arduino
     
-    static final int ButtonSel = 2; // pin donde se encuentra el boton para seleccionar
-    static final int ButtonRight = 3; // pin donde se encuentra el boton para moverse hacia la derecha
-    static final int ButtonLeft = 4; // pin donde se encuentra el boton para moverse hacia la izquierda 
-    static final int ButtonDown = 5; // pin donde se encuentra el boton para moverse hacia abajo 
-    static final int ButtonUp = 6; // pin donde se encuentra el boton para moverse hacia arriba 
+    static final int ButtonSel = 3; // pin donde se encuentra el boton para seleccionar
+    static final int ButtonRight = 4; // pin donde se encuentra el boton para moverse hacia la derecha
+    static final int ButtonLeft = 5; // pin donde se encuentra el boton para moverse hacia la izquierda 
+    static final int ButtonDown = 6; // pin donde se encuentra el boton para moverse hacia abajo 
+    static final int ButtonUp = 7; // pin donde se encuentra el boton para moverse hacia arriba 
     
-    static final int LED = 7; // pin donde se encuentra el LED 
-    //static final int Buzzer = 8;
+    static final int LED = 8; // pin donde se encuentra el LED 
+    static final int Buzzer = 2;
     
     static Pin RedLED;
-    //static Pin activeBuzzer;
+    static Pin passiveBuzzer;
     
     /**
      * Se inicia la conexion con el arduino
@@ -61,77 +63,93 @@ public class Controller {
         }
         finally { // aqui se pone el codigo que se quiere ejecutar
             
-            RedLED = arduino.getPin(LED); // se le asigna el pin del arduino donde se encuentra el LED a una variable
-            RedLED.setMode(Pin.Mode.OUTPUT); // se le asigna el modo output al LED
-            
-            //activeBuzzer = arduino.getPin(Buzzer);
-            //activeBuzzer.setMode(Pin.Mode.OUTPUT);
-            
-            Pin buttonSel = arduino.getPin(ButtonSel); // se le asigna el pin del arduino donde se encuentra el boton a una variable
-            buttonSel.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
-            
-            Pin buttonRight = arduino.getPin(ButtonRight); // se le asigna el pin del arduino donde se encuentra el boton a una variable
-            buttonRight.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
-            
-            Pin buttonLeft = arduino.getPin(ButtonLeft); // se le asigna el pin del arduino donde se encuentra el boton a una variable
-            buttonLeft.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
-            
-            Pin buttonDown = arduino.getPin(ButtonDown); // se le asigna el pin del arduino donde se encuentra el boton a una variable
-            buttonDown.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
-            
-            Pin buttonUp = arduino.getPin(ButtonUp); // se le asigna el pin del arduino donde se encuentra el boton a una variable
-            buttonUp.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
-            
-            /**
-             * Loop que registra cuando se presionan los
-             * botones de direccion y seleccion. Al presionar
-             * los botones de direccion se cambia el tamaño
-             * del boton donde se encuentra el controli y 
-             * controlj para visualizar donde se va a
-             * seleccionar. 
-             */
-            while (controllerFuncionando == true) { 
-                if (buttonRight.getValue() != 0) {
-                    if (controlj < 7) {
-                        resetSizes();
-                        controlj++;
-                        Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(200);
+            try {
+                RedLED = arduino.getPin(LED); // se le asigna el pin del arduino donde se encuentra el LED a una variable
+                RedLED.setMode(Pin.Mode.OUTPUT); // se le asigna el modo output al LED
+
+                passiveBuzzer = arduino.getPin(Buzzer);
+                passiveBuzzer.setMode(Pin.Mode.OUTPUT);
+
+                Pin buttonSel = arduino.getPin(ButtonSel); // se le asigna el pin del arduino donde se encuentra el boton a una variable
+                buttonSel.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
+
+                Pin buttonRight = arduino.getPin(ButtonRight); // se le asigna el pin del arduino donde se encuentra el boton a una variable
+                buttonRight.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
+
+                Pin buttonLeft = arduino.getPin(ButtonLeft); // se le asigna el pin del arduino donde se encuentra el boton a una variable
+                buttonLeft.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
+
+                Pin buttonDown = arduino.getPin(ButtonDown); // se le asigna el pin del arduino donde se encuentra el boton a una variable
+                buttonDown.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
+
+                Pin buttonUp = arduino.getPin(ButtonUp); // se le asigna el pin del arduino donde se encuentra el boton a una variable
+                buttonUp.setMode(Pin.Mode.INPUT); // se le asigna el modo input al boton 
+
+                /**
+                 * Loop que registra cuando se presionan los
+                 * botones de direccion y seleccion. Al presionar
+                 * los botones de direccion se cambia el tamaño
+                 * del boton donde se encuentra el controli y 
+                 * controlj para visualizar donde se va a
+                 * seleccionar. 
+                 */
+                while (controllerFuncionando == true) { 
+                    if (buttonRight.getValue() != 0) {
+                        if (controlj < 7) {
+                            resetSizes();
+                            controlj++;
+                            Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
+                            Thread.sleep(200);
+                        }
+                    }
+                    if (buttonLeft.getValue() != 0) {
+                        if (controlj > 0) {
+                            resetSizes();
+                            controlj--;
+                            Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
+                            Thread.sleep(200);
+                        }
+                    }
+                    if (buttonUp.getValue() != 0) {
+                        if (controli > 0) {
+                            resetSizes();
+                            controli--;
+                            Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
+                            Thread.sleep(200);
+                        }
+                    }
+                    if (buttonDown.getValue() != 0) {
+                        if (controli < 7) {
+                            resetSizes();
+                            controli++;
+                            Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
+                            Thread.sleep(200);
+                        }
+                    }
+                    if (buttonSel.getValue() != 0) {
+                        if (Cuadricula.gameover == false) {
+                            if (Cuadricula.matrizvalores[controli][controlj].revelado == false) {
+                                Platform.runLater(() -> {
+                                    try {
+                                        main.elegirEspacioController(controli, controlj);
+                                    } 
+                                    catch (IOException | InterruptedException ex) {
+                                        System.out.println("Trouble connecting to board");
+                                    }
+                                });
+                                Thread.sleep(250);
+                            }
+                        }
                     }
                 }
-                if (buttonLeft.getValue() != 0) {
-                    if (controlj > 0) {
-                        resetSizes();
-                        controlj--;
-                        Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(200);
-                    }
-                }
-                if (buttonUp.getValue() != 0) {
-                    if (controli > 0) {
-                        resetSizes();
-                        controli--;
-                        Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(200);
-                    }
-                }
-                if (buttonDown.getValue() != 0) {
-                    if (controli < 7) {
-                        resetSizes();
-                        controli++;
-                        Cuadricula.matrizboton[controli][controlj].setMaxSize(40, 40);
-                        Thread.sleep(200);
-                    }
-                }
-                if (buttonSel.getValue() != 0) {
-                    Platform.runLater(() -> main.elegirEspacioController(controli, controlj));
-                    Thread.sleep(250);
-                }
+
+                arduino.stop();
+                controllerFuncionando = false;
+
             }
-            
-            arduino.stop();
-            controllerFuncionando = false;
-            
+            catch (Exception except) {
+                System.out.println("Controller not connected or incorrect port");
+            }
         }
     }
     
